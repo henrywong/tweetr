@@ -150,9 +150,10 @@ package com.swfjunkie.tweetr
         private function get url():URLRequest
         {
             if (!_username && !_password)
-                throw new Error("Username and/or Password have not been set!");
-            
-            if (!browserAuth)
+            {
+                urlRequest.url = "http://twitter.com"+request;
+            }
+            else if (!browserAuth)
             {
                 var base64:Base64Encoder = new Base64Encoder();
                 base64.encode(_username+":"+_password);
@@ -224,6 +225,7 @@ package com.swfjunkie.tweetr
         public function getFriendsTimeLine(since_id:String = null, since_date:String = null, count:int = 0, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_STATUS;
             
@@ -257,6 +259,7 @@ package com.swfjunkie.tweetr
         public function getUserTimeLine(id:String = null, since_id:String = null, since_date:String = null, count:int = 0, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_STATUS;
             
@@ -299,6 +302,7 @@ package com.swfjunkie.tweetr
         public function sendTweet(status:String, inReplyTo:int = 0):void
         {
             var vars:URLVariables = new URLVariables();
+            checkCredentials();
             _returnType = RETURN_TYPE_STATUS;
             
             vars.status = status.substr(0,140);
@@ -319,6 +323,7 @@ package com.swfjunkie.tweetr
         public function getReplies(since_id:String = null, since_date:String = null, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_STATUS;
             
@@ -340,8 +345,9 @@ package com.swfjunkie.tweetr
          * @param id   Required. The ID of the status to destroy
          */ 
         public function destroyTweet(id:int):void
-        {
+        {   
             var vars:URLVariables = new URLVariables();
+            checkCredentials();
             _returnType = RETURN_TYPE_STATUS;
             
             vars.id = id;
@@ -367,6 +373,7 @@ package com.swfjunkie.tweetr
         public function getFriends(id:String = null, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_BASIC_USER_INFO;
             
@@ -386,6 +393,7 @@ package com.swfjunkie.tweetr
         public function getFollowers(id:String = null, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_BASIC_USER_INFO;
             
@@ -407,6 +415,7 @@ package com.swfjunkie.tweetr
         public function getUserDetails(id:String=null, email:String=null):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_EXTENDED_USER_INFO;
             
@@ -440,6 +449,7 @@ package com.swfjunkie.tweetr
         public function getReceivedDirectMessages(since_id:String = null, since_date:String = null, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_DIRECT_MESSAGE;
             
@@ -464,6 +474,7 @@ package com.swfjunkie.tweetr
         public function getSentDirectMessages(since_id:String = null, since_date:String = null, page:int = 0):void
         {
             var arguments:Array = [];
+            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_DIRECT_MESSAGE;
             
@@ -487,6 +498,7 @@ package com.swfjunkie.tweetr
         public function sendDirectMessage(text:String, user:String):void
         {
             var vars:URLVariables = new URLVariables();
+            checkCredentials();
             _returnType = RETURN_TYPE_DIRECT_MESSAGE;
             vars.user = user;
             vars.text = text.substr(0,140);
@@ -505,6 +517,7 @@ package com.swfjunkie.tweetr
         public function destroyDirectMessage(id:int):void
         {
             var vars:URLVariables = new URLVariables();
+            checkCredentials();
             _returnType = RETURN_TYPE_DIRECT_MESSAGE;
             
             vars.id = id;
@@ -530,6 +543,7 @@ package com.swfjunkie.tweetr
         public function createFriendship(id:String, follow:Boolean = true):void
         {
             var vars:URLVariables = new URLVariables();
+            checkCredentials();
             _returnType = RETURN_TYPE_BASIC_USER_INFO;
             
             vars.id = id;
@@ -550,6 +564,7 @@ package com.swfjunkie.tweetr
         public function destroyFriendship(id:String):void
         {
             var vars:URLVariables = new URLVariables();
+            checkCredentials();
             _returnType = RETURN_TYPE_BASIC_USER_INFO;
             
             vars.id = id;
@@ -613,6 +628,7 @@ package com.swfjunkie.tweetr
 		public function updateProfile(name:String = null, email:String = null, url:String = null, location:String = null, description:String = null):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_EXTENDED_USER_INFO;
 		    
 		    if (name)
@@ -644,14 +660,15 @@ package com.swfjunkie.tweetr
 		public function getFavorites(id:String, page:int = 0):void
 		{
 		   var arguments:Array = [];
-            setGETRequest();
-            _returnType = RETURN_TYPE_STATUS;
+		   checkCredentials();
+           setGETRequest();
+           _returnType = RETURN_TYPE_STATUS;
             
              if (page > 0)
                 arguments.push("page="+page);
             
-            request = URL_RETRIEVE_FAVORITES + ( (id) ? "/"+id+"."+DATA_FORMAT : "."+DATA_FORMAT  ) + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
-            urlLoader.load(url);   
+           request = URL_RETRIEVE_FAVORITES + ( (id) ? "/"+id+"."+DATA_FORMAT : "."+DATA_FORMAT  ) + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
+           urlLoader.load(url);   
 		}
 		
 		/**
@@ -662,6 +679,7 @@ package com.swfjunkie.tweetr
 		public function createFavorite(id:int):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_STATUS;
 		    
 		    vars.id = id;
@@ -680,6 +698,7 @@ package com.swfjunkie.tweetr
 		public function destroyFavorite(id:int):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_STATUS;
 		    
 		    vars.id = id;
@@ -704,6 +723,7 @@ package com.swfjunkie.tweetr
 		public function followUser(id:String):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_BASIC_USER_INFO;
 		    
 		    vars.id = id;
@@ -723,6 +743,7 @@ package com.swfjunkie.tweetr
 		public function unfollowUser(id:String):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_BASIC_USER_INFO;
 		    
 		    vars.id = id;
@@ -746,6 +767,7 @@ package com.swfjunkie.tweetr
 		public function blockUser(id:String):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_BASIC_USER_INFO;
 		    
 		    vars.id = id;
@@ -764,6 +786,7 @@ package com.swfjunkie.tweetr
 		public function unblockUser(id:String):void
 		{
 		    var vars:URLVariables = new URLVariables();
+		    checkCredentials();
 		    _returnType = RETURN_TYPE_BASIC_USER_INFO;
 		    
 		    vars.id = id;
@@ -928,8 +951,7 @@ package com.swfjunkie.tweetr
         }
         
         /**
-         * Reset the URLRequest back to GET Method since update
-         * is the only method that needs the POST Method
+         * @private 
          */ 
         private function setGETRequest():void
         {
@@ -937,10 +959,22 @@ package com.swfjunkie.tweetr
             urlRequest.data = null;
         }
         
+        /**
+         * @private
+         */ 
         private function setPOSTRequest(vars:URLVariables=null):void
         {
             urlRequest.method = URLRequestMethod.POST;
             urlRequest.data = vars;
+        }
+        
+        /**
+         * @private
+         */ 
+        private function checkCredentials():void
+        {
+            if(!_username && !_password)
+                throw new Error("Username and Password required but missing!");
         }
         //--------------------------------------------------------------------------
         //

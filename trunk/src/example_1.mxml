@@ -5,10 +5,9 @@
             import com.swfjunkie.tweetr.utils.URLShortener;
             import com.swfjunkie.tweetr.events.TweetEvent;
             import com.swfjunkie.tweetr.Tweetr;
-            
-            import nl.demonsters.debugger.MonsterDebugger;
         
         	/**
+        	 * A Simple example of how to use Tweetr
 	 		 * @author Sandro Ducceschi [swfjunkie.com, Switzerland]
 	 		 */
             
@@ -26,12 +25,14 @@
         	
         	public function init():void
         	{
-        	    debugger = new MonsterDebugger(this);
-            	tweeter = new Tweetr("_sandro","d3xtr0s3");
+            	tweeter = new Tweetr();
+            	
+            	
             	tweeter.addEventListener(TweetEvent.COMPLETE, handleLoad);
             	tweeter.addEventListener(TweetEvent.FAILED, handleFail);
             	//tweeter.getSingleTweet(123);
             	//tweeter.getFriendsTimeLine();
+            	tweeter.getPublicTimeLine();
             	//tweeter.getReceivedDirectMessages();
             	//tweeter.getUserDetails(null,"test@example.com");
             	//tweeter.getFriends();
@@ -49,12 +50,10 @@
         	
         	private function handleLoad(event:TweetEvent):void
         	{
-        	   MonsterDebugger.trace(this,event);
         	}
         	
         	private function handleFail(event:TweetEvent):void
         	{
-        	   MonsterDebugger.trace(this,event);
         	}
         	
         	//--------------------------------------------------------------------------
@@ -64,8 +63,6 @@
         	//--------------------------------------------------------------------------
         	private var tweeter:Tweetr;
         	private var shortener:URLShortener;
-        	
-        	private var debugger:MonsterDebugger;       
 	        //--------------------------------------------------------------------------
 	        //
 			//  Properties
