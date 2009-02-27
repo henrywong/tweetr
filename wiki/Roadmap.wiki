@@ -1,0 +1,13 @@
+#summary Roadmap for tweetr.
+#labels Featured,Phase-Requirements
+
+= In General =
+
+Keep the Library up to date and bug free.
+
+= Details =
+
+Open tasks at the moment include
+  * Build a couple examples
+  * implement the missing profile updating features
+  * Make sure there are no bugs
