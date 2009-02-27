@@ -2,6 +2,7 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" applicationComplete="init();">
 	<mx:Script>
         <![CDATA[
+            import mx.controls.Alert;
             import com.swfjunkie.tweetr.utils.URLShortener;
             import com.swfjunkie.tweetr.events.TweetEvent;
             import com.swfjunkie.tweetr.Tweetr;
@@ -10,95 +11,38 @@
         	 * A Simple example of how to use Tweetr
 	 		 * @author Sandro Ducceschi [swfjunkie.com, Switzerland]
 	 		 */
+	 		 
+	 		private var tweeter:Tweetr;
+        	private var shortener:URLShortener;
             
-            //--------------------------------------------------------------------------
-        	//
-        	//  Class variables
-        	//
-        	//--------------------------------------------------------------------------
-        	
-        	//--------------------------------------------------------------------------
-        	//
-        	//  Initialization
-        	//
-        	//--------------------------------------------------------------------------
-        	
         	public function init():void
         	{
             	tweeter = new Tweetr();
             	
-            	
             	tweeter.addEventListener(TweetEvent.COMPLETE, handleLoad);
             	tweeter.addEventListener(TweetEvent.FAILED, handleFail);
+            	
             	//tweeter.getSingleTweet(123);
-            	//tweeter.getFriendsTimeLine();
             	tweeter.getPublicTimeLine();
-            	//tweeter.getReceivedDirectMessages();
-            	//tweeter.getUserDetails(null,"test@example.com");
-            	//tweeter.getFriends();
-            	//tweeter.getRateLimitStatus();
-            	//tweeter.hasFriendShip("_sandro","someone");
-            	//tweeter.sendTweet("test post from my as3 twitter api, making sure i didn't break anything :)");
-            	//tweeter.sendDirectMessage("test message from twitter api","seldaek");
-            	//tweeter.createFriendShip("seldaek");
-            	//tweeter.destroyTweet(1237359913);
-            	//tweeter.destroyDirectMessage(63955098);
-            	//tweeter.destroyFavorite(1244159419);
-            	//tweeter.search("gmail");
-            	//tweeter.trends();
         	}
         	
         	private function handleLoad(event:TweetEvent):void
         	{
+        	    datagrid.dataProvider = event.responseArray;
         	}
         	
         	private function handleFail(event:TweetEvent):void
         	{
+        	    Alert.show(event.info,"Epic Fail");
         	}
-        	
-        	//--------------------------------------------------------------------------
-        	//
-        	//  Variables
-        	//
-        	//--------------------------------------------------------------------------
-        	private var tweeter:Tweetr;
-        	private var shortener:URLShortener;
-	        //--------------------------------------------------------------------------
-	        //
-			//  Properties
-			//
-			//--------------------------------------------------------------------------
-			
-	        //--------------------------------------------------------------------------
-	        //
-	        //  Additional getters and setters
-	        //
-	        //--------------------------------------------------------------------------
-                
-	        //--------------------------------------------------------------------------
-	        //
-	        //  API
-	        //
-	        //--------------------------------------------------------------------------
-            
-	        //--------------------------------------------------------------------------
-	        //
-	        //  Methods
-	        //
-	        //--------------------------------------------------------------------------
-	        
-	        //--------------------------------------------------------------------------
-	        //
-	        //  Broadcasting
-	        //
-	        //--------------------------------------------------------------------------
-	        
-	        //--------------------------------------------------------------------------
-	        //
-	        //  Eventhandling
-	        //
-	        //--------------------------------------------------------------------------
-            
         ]]>
     </mx:Script>
+    
+    <mx:Panel title="Latest Tweets from the Public Timeline" width="100%">
+	<mx:DataGrid id="datagrid" width="100%" minHeight="400">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Status Messages" dataField="text"/>
+		</mx:columns>
+	</mx:DataGrid>
+	</mx:Panel>    
 </mx:Application>
