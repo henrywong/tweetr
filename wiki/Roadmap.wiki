@@ -7,7 +7,9 @@ Keep the Library up to date and bug free.
 
 = Details =
 
-Open tasks at the moment include
+Open tasks at the moment include:
+  
   * Build a couple examples
+  * Build a simple php wrapper so tweetr can be used for web based flash apps.
   * implement the missing profile updating features
   * Make sure there are no bugs
