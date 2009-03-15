@@ -1,0 +1,14 @@
+#summary Changes from last version to v0.9
+#labels Featured
+
+== ChangeLog v0.9 ==
+
+=== Fixes / Changes ===
+
+  * Removed / fixed some authentication mixups for couple GET Requests
+  * added serviceHost variable to define if we call twitter directly or use the PHP Proxy
+
+=== New ===
+
+  * PHP Proxy Class so Tweetr can be used from web apps
+  * Added two examples on how to use tweetr with the proxy
