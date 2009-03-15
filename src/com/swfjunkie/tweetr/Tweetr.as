@@ -15,6 +15,8 @@ package com.swfjunkie.tweetr
     import flash.net.URLRequestMethod;
     import flash.net.URLVariables;
     
+    import mx.events.IndexChangedEvent;
+    
     /**
 	 * Dispatched when the Tweetr has Completed a Request.
 	 * @eventType com.swfjunkie.Tweetr.events.TweetEvent.COMPLETE
@@ -51,8 +53,8 @@ package com.swfjunkie.tweetr
         private static const URL_SEND_UPDATE:String =               "/statuses/update.xml";
         private static const URL_DESTROY_TWEET:String =             "/statuses/destroy/";
         private static const URL_REPLIES:String =                   "/statuses/replies.xml";
-        private static const URL_FRIENDS:String =                   "/statuses/friends/";
-        private static const URL_FOLLOWERS:String =                 "/statuses/followers/";
+        private static const URL_FRIENDS:String =                   "/statuses/friends";
+        private static const URL_FOLLOWERS:String =                 "/statuses/followers";
         private static const URL_USER_DETAILS:String =              "/users/show/";
         private static const URL_RECEIVED_DIRECT_MESSAGES:String =  "/direct_messages.xml";
         private static const URL_SENT_DIRECT_MESSAGES:String =      "/direct_messages/sent.xml";
@@ -75,7 +77,7 @@ package com.swfjunkie.tweetr
 		private static const DATA_FORMAT:String = "xml";
         
         /** Version String of the Tweetr Library */
-        public static const version:String = "0.8";		
+        public static const version:String = "0.9";		
 		
 		/** Return type defining what type of return Object you can expect, in this case: <code>StatusData</code> */
 		public static const RETURN_TYPE_STATUS:String = "status";
@@ -151,18 +153,18 @@ package com.swfjunkie.tweetr
         {
             if (!_username && !_password)
             {
-                urlRequest.url = "http://twitter.com"+request;
+                urlRequest.url = "http://"+serviceHost+request;
             }
             else if (!browserAuth)
             {
                 var base64:Base64Encoder = new Base64Encoder();
                 base64.encode(_username+":"+_password);
                 urlRequest.requestHeaders = [new URLRequestHeader("Authorization", "Basic "+base64.toString())];
-                urlRequest.url = "http://twitter.com"+request;
+                urlRequest.url = "http://"+serviceHost+request;
             }
             else
             {
-                urlRequest.url = "http://"+_username+":"+_password+"@twitter.com"+request;
+                urlRequest.url = "http://"+_username+":"+_password+"@"+serviceHost+request;
             }
             return urlRequest;
         }
@@ -190,6 +192,14 @@ package com.swfjunkie.tweetr
         {
             return _returnType;
         }
+        
+        /**
+         * Service Host URL you want to use without "http://".
+         * This has to be changed if you are going to use tweetr
+         * from a web app. Since the crossdomain policy of twitter.com
+         * is very restrictive. use Tweetr's own PHPProxy Class for this. 
+         */ 
+        public var serviceHost:String = "twitter.com";
         //--------------------------------------------------------------------------
         //
         //  API
@@ -259,7 +269,10 @@ package com.swfjunkie.tweetr
         public function getUserTimeLine(id:String = null, since_id:String = null, since_date:String = null, count:int = 0, page:int = 0):void
         {
             var arguments:Array = [];
-            checkCredentials();
+            
+            if(!id)
+                checkCredentials();
+            
             setGETRequest();
             _returnType = RETURN_TYPE_STATUS;
             
@@ -373,7 +386,10 @@ package com.swfjunkie.tweetr
         public function getFriends(id:String = null, page:int = 0):void
         {
             var arguments:Array = [];
-            checkCredentials();
+            
+            if (!id)
+                checkCredentials();
+            
             setGETRequest();
             _returnType = RETURN_TYPE_BASIC_USER_INFO;
             
@@ -415,7 +431,6 @@ package com.swfjunkie.tweetr
         public function getUserDetails(id:String=null, email:String=null):void
         {
             var arguments:Array = [];
-            checkCredentials();
             setGETRequest();
             _returnType = RETURN_TYPE_EXTENDED_USER_INFO;
             
@@ -659,16 +674,19 @@ package com.swfjunkie.tweetr
 		 */
 		public function getFavorites(id:String, page:int = 0):void
 		{
-		   var arguments:Array = [];
-		   checkCredentials();
-           setGETRequest();
-           _returnType = RETURN_TYPE_STATUS;
+		    var arguments:Array = [];
+		   
+		    if (!id)
+		        checkCredentials();
             
-             if (page > 0)
+            setGETRequest();
+            _returnType = RETURN_TYPE_STATUS;
+            
+            if (page > 0)
                 arguments.push("page="+page);
             
-           request = URL_RETRIEVE_FAVORITES + ( (id) ? "/"+id+"."+DATA_FORMAT : "."+DATA_FORMAT  ) + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
-           urlLoader.load(url);   
+            request = URL_RETRIEVE_FAVORITES + ( (id) ? "/"+id+"."+DATA_FORMAT : "."+DATA_FORMAT  ) + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
+            urlLoader.load(url);   
 		}
 		
 		/**
