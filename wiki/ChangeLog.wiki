@@ -1,6 +1,12 @@
 #summary changelog history
 #labels Featured
 
+===v0.91===
+
+  * Updated PHP Proxy Class: Simplified it heavily
+  * Added crossdomain.xml template to the .zip
+
+
 ===v0.9===
 
 *Fixes / Changes*
