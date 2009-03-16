@@ -3,14 +3,17 @@
 
 ===v0.91===
 
+*Fixes / Changes*
   * Updated PHP Proxy Class: Simplified it heavily
+
+*New*
   * Added crossdomain.xml template to the .zip
 
+----
 
 ===v0.9===
 
 *Fixes / Changes*
-
   * Removed / fixed some authentication mixups for couple GET Requests
   * added serviceHost variable to define if we call twitter directly or use the PHP Proxy
 
