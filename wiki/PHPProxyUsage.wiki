@@ -1,29 +1,55 @@
 #summary How to use the Tweetr PHP Proxy
 
-===Requirements===
+= Requirements =
 
   * >= PHP 5
   * CURL must be available to PHP
   * Use of .htaccess / ModRewrite must be available/granted
 
-===Installation===
+= Installation =
 
-  * Put the `/proxy` wherever you need it on your server.
-  * If the proxy is not on the same domain/subdomain as your app you will have to put the `crossdomain.xml` in the root folder of the domain you are going to use the proxy from.
-  * Change the `$tweetrOptions['baseURL']` variable to point to where you just put the proxy folder. For example if you want to call the proxy from `http://mydomain/mywebsite/proxy/` then your baseURL would be `/mywebsite/proxy`
-  * That's it!
+  # Put the `/proxy` wherever you need it on your server.
+  # If the proxy is not on the same domain/subdomain as your app you will have to put the `crossdomain.xml` in the root folder of the domain you are going to use the proxy from.
+  # Change the `$tweetrOptions['baseURL']` variable to point to where you just put the proxy folder. For example if you want to call the proxy from `http://mydomain/mywebsite/proxy/` then your baseURL would be `/mywebsite/proxy`
+  # That's it!
 
-===Options===
+= Options =
 
-The `index.php` file allows you to configure certain aspects of the Proxy. Here are the options and what they do:
+The `index.php` file allows you to configure certain aspects of the Proxy. Syntax is always: `$tweetrOptions['NAME'] = VALUE;`
 
-Syntax is always: `$tweetrOptions['NAME'] = VALUE;`
+== Overview ==
+|| *Name* || *Required* || *Description* || *Default value* ||
+|| baseURL || yes || Base URL of the Proxy || (_string_) `/proxy` ||
+|| userAgent || no || User Agent Name || (_string_) `TweetrProxy/0.92` ||
+|| userAgentLink || no || Link to your User Agent || (_string_) `http://tweetr.googlecode.com` ||
+|| debugMode || no ||  Turns Debug Mode ON or OFF. || (_boolean_) `false` ||
+|| ghostName || no ||  Ghost Authentication Name || (_string_) `ghost` ||
+|| ghostPass || no ||  Ghost Authentication Password || (_string_) `ghost` ||
+|| userName || no ||  Username to use instead of Ghost Auth || (_null_) ||
+|| userPass || no ||  Password to use instead of Ghost Auth || (_null_) ||
 
-|| *Name* || *Description* || *Defaultvalue* ||
-|| userAgent || User Agent Name || (_string_) `TweetrProxy/0.92` ||
-|| userAgentLink || Link to your UserAgent || (_string_) `http://tweetr.googlecode.com` ||
-|| debugMode || Turns Debug Mode ON or OFF. || (_boolean_) `false` ||
-|| ghostName || Ghost Authentication Name || (_string_) `ghost` ||
-|| ghostPass || Ghost Authentication Password || (_string_) `ghost` ||
-|| userName || Username to use instead of GhostAuth || (_null_) ||
-|| userPass || Password to use instead of GhostAuth || (_null_) ||
+== Details ==
+
+<p>*baseURL*<br/>
+As the name says it's the base url where the proxy can find itself. See installation step 3 for more information.
+</p>
+<p>
+*userAgent*<br/>
+Allows you to set your own User Agent under which the Proxy will do requests to the twitter api
+</p>
+<p>
+*userAgentLink*<br/>
+Allows you to set a link to a website for your User Agent. When somebody hits `index.php` he will see the User Agent String which is linked to the website you define here.
+</p>
+<p>
+*debugMode*<br/>
+`Tweetr.php` allows you to add your own Debugging Routine to it's code, you can enable debugMode by setting this value to true.
+</p>
+<p>
+*ghostName & ghostPass*<br/>
+This allows you to mask/hide the actual username you are going to use when you also define `userName` and `userPass`.
+<br/>From your app you pass these ghost credentials and the proxy will recognize that and actually use the `userName` and `userPass` supplied instead of the ghost credentials.
+</p>
+<p>
+*userName & userPass*<br/>
+See `ghostName` & `ghostPass`</p>
