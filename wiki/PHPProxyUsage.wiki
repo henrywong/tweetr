@@ -1,3 +1,29 @@
 #summary How to use the Tweetr PHP Proxy
 
-content coming soon
+===Requirements===
+
+  * >= PHP 5
+  * CURL must be available to PHP
+  * Use of .htaccess / ModRewrite must be available/granted
+
+===Installation===
+
+  * Put the `/proxy` wherever you need it on your server.
+  * If the proxy is not on the same domain/subdomain as your app you will have to put the `crossdomain.xml` in the root folder of the domain you are going to use the proxy from.
+  * Change the `$tweetrOptions['baseURL']` variable to point to where you just put the proxy folder. For example if you want to call the proxy from `http://mydomain/mywebsite/proxy/` then your baseURL would be `/mywebsite/proxy`
+  * That's it!
+
+===Options===
+
+The `index.php` file allows you to configure certain aspects of the Proxy. Here are the options and what they do:
+
+Syntax is always: `$tweetrOptions['NAME'] = VALUE;`
+
+|| *Name* || *Description* || *Defaultvalue* ||
+|| userAgent || User Agent Name || (_string_) `TweetrProxy/0.92` ||
+|| userAgentLink || Link to your UserAgent || (_string_) `http://tweetr.googlecode.com` ||
+|| debugMode || Turns Debug Mode ON or OFF. || (_boolean_) `false` ||
+|| ghostName || Ghost Authentication Name || (_string_) `ghost` ||
+|| ghostPass || Ghost Authentication Password || (_string_) `ghost` ||
+|| userName || Username to use instead of GhostAuth || (_null_) ||
+|| userPass || Password to use instead of GhostAuth || (_null_) ||
