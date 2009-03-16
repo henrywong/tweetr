@@ -40,7 +40,7 @@ Allows you to set your own User Agent under which the Proxy will do requests to 
 </p>
 <p>
 *userAgentLink*<br/>
-Allows you to set a link to a website for your User Agent. When somebody hits `index.php` he will see the User Agent String which is linked to the website you define here.
+Allows you to set a link to a website for your User Agent. When somebody hits `index.php` he will see the User Agent String which is linked to the website you define here. For an example see http://labs.swfjunkie.com/tweetr/proxy/
 </p>
 <p>
 *debugMode*<br/>
