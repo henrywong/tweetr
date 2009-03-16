@@ -10,7 +10,7 @@ class Tweetr
     //  Class variables
 	//
 	//--------------------------------------------------------------------------
-	const USER_AGENT = 'TweetrProxy/0.9';
+	const USER_AGENT = 'TweetrProxy/0.91';
 	const BASEURL = "/proxy";
 	const DEBUGMODE = false;
 	//--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ class Tweetr
 
 		// set the current url and parse it
 		$this->url = parse_url($_SERVER[REQUEST_URI]);
-		$this->parseRequest();
+		$this->twitterRequest();
 	}
 
 	//--------------------------------------------------------------------------
@@ -51,44 +51,17 @@ class Tweetr
     //--------------------------------------------------------------------------
 	
 	/**
-	 * Pre-Parses the received request to see if we need authentication or not
-	 */
-	private function parseRequest()
-	{
-		if($_SERVER[REQUEST_METHOD] == "POST")
-		{
-			$this->requestCredentials();
-		}
-		else
-		{
-			if($this->url['path'] == $this->baseURL."/")
-			{
-				echo $this->userAgent;
-				exit;
-			}
-			else if( strpos($this->url['path'], "statuses/friends_timeline") != false ||
-				strpos($this->url['path'], "statuses/user_timeline.") != false ||
-				strpos($this->url['path'], "statuses/replies.") != false ||
-				strpos($this->url['path'], "statuses/friends.") != false ||
-				strpos($this->url['path'], "statuses/followers") != false ||
-				strpos($this->url['path'], "direct_messages") != false ||
-				strpos($this->url['path'], "favorites.") != false )
-			{
-				$this->requestCredentials();
-			}
-			else
-			{
-				$this->twitterRequest();
-			}
-		}
-	}
-	
-	/**
 	 * Makes a request to twitter with the data provided and returns the result to the screen
 	 * @param (bool) $authenticated		Whether we are authenticated or not
 	 */
-	private function twitterRequest($authenticated = false)
+	private function twitterRequest()
 	{
+		if($this->url['path'] == $this->baseURL."/")
+		{
+			echo $this->userAgent;
+			exit;
+		}
+		
 		$twitterURL = "http://twitter.com".str_replace($this->baseURL,"",$this->url['path']);
 		
 		$opt[CURLOPT_URL] = $twitterURL;
@@ -97,7 +70,7 @@ class Tweetr
 		$opt[CURLOPT_RETURNTRANSFER] = true;
 		$opt[CURLOPT_TIMEOUT] = 60;
 
-		if($authenticated)
+		if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))
 		{
 			$opt[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
 			$opt[CURLOPT_USERPWD] = $_SERVER['PHP_AUTH_USER'] .':'. $_SERVER['PHP_AUTH_PW'];
@@ -133,24 +106,6 @@ class Tweetr
 		
 		header ("content-type: text/xml");
 		echo $response;
-	}
-	
-	/**
-	 * Requests Basic Authentication
-	 */
-	private function requestCredentials()
-	{
-		if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['PHP_AUTH_PW']))
-		{
-		   header('WWW-Authenticate: Basic realm="Tweetr Realm"');
-		   header('HTTP/1.0 401 Unauthorized');
-		   echo 'Credentials missing';
-		   exit;
-		} 
-		else
-		{
-			$this->twitterRequest(true);
-		}
 	}
 	
 	/**
