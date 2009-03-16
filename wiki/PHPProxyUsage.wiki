@@ -1,10 +1,11 @@
 #summary How to use the Tweetr PHP Proxy
+#labels Featured
 
 = Requirements =
 
   * >= PHP 5
   * CURL must be available to PHP
-  * Use of .htaccess / ModRewrite must be available/granted
+  * Use of `.htaccess` / `ModRewrite` must be available/granted
 
 = Installation =
 
