@@ -1,7 +1,7 @@
-#summary Changes from last version to v0.9
+#summary changelog history
 #labels Featured
 
-== ChangeLog v0.9 ==
+== v0.9 ==
 
 === Fixes / Changes ===
 
