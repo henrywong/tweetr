@@ -1,6 +1,16 @@
 #summary changelog history
 #labels Featured
 
+===v0.92===
+
+*Fixes / Changes*
+  * PHP Proxy: added more options see http://code.google.com/p/tweetr/wiki/PHPProxyUsage
+
+*New*
+  * Added another Example (Example #3) to demonstrate new Proxy Options
+
+----
+
 ===v0.91===
 
 *Fixes / Changes*
