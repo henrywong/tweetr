@@ -10,9 +10,11 @@ class Tweetr
     //  Class variables
 	//
 	//--------------------------------------------------------------------------
-	const USER_AGENT = 'TweetrProxy/0.91';
+	const USER_AGENT = 'TweetrProxy/0.92';
+	const USER_AGENT_LINK = 'http://tweetr.googlecode.com/';
 	const BASEURL = "/proxy";
 	const DEBUGMODE = false;
+	const GHOST_DEFAULT = "ghost";
 	//--------------------------------------------------------------------------
 	//
 	//  Initialization
@@ -21,15 +23,22 @@ class Tweetr
 	
 	/**
 	 * Creates a Tweetr Proxy Instance
-	 * @param (array) $options	Associative Array containing 'baseURL' and 'debugMode' options values
+	 * @param (array) $options	Associative Array containing optional values see http://code.google.com/p/tweetr/wiki/PHPProxyUsage
 	 */
 	public function Tweetr($options = null)
 	{
 		// set the options
 		$this->baseURL = (isset($options['baseURL'])) ? $options['baseURL'] : self::BASEURL;
-		$this->debug = (isset($options['debugMode'])) ? $options['debugMode'] : self::DEBUGMODE;
 		$this->userAgent = (isset($options['userAgent'])) ? $options['userAgent'] : self::USER_AGENT;
+		$this->userAgentLink = (isset($options['userAgentLink'])) ? $options['userAgentLink'] : self::USER_AGENT_LINK;
+		$this->debug = (isset($options['debugMode'])) ? $options['debugMode'] : self::DEBUGMODE;
+		
+		$this->ghostName = (isset($options['ghostName'])) ? $options['ghostName'] : self::GHOST_DEFAULT;
+		$this->ghostPass = (isset($options['ghostPass'])) ? $options['ghostPass'] : self::GHOST_DEFAULT;
+		$this->userName = (isset($options['userName'])) ? $options['userName'] : null;
+		$this->userPass = (isset($options['userPass'])) ? $options['userPass'] : null;
 
+		
 		// set the current url and parse it
 		$this->url = parse_url($_SERVER[REQUEST_URI]);
 		$this->twitterRequest();
@@ -44,6 +53,11 @@ class Tweetr
 	private $debug;
 	private $baseURL;
 	private $userAgent;
+	private $userAgentLink;
+	private $userName;
+	private $userPass;
+	private $ghostName;
+	private $ghostPass;
     //--------------------------------------------------------------------------
     //
     //  Methods
@@ -57,7 +71,7 @@ class Tweetr
 	{
 		if($this->url['path'] == $this->baseURL."/")
 		{
-			echo $this->userAgent;
+			echo '<html><head><title>'.$this->userAgent.'</title></head><body><a href="'.$this->userAgentLink.'" title="Go to Website">'.$this->userAgent.'</a></body></html>';
 			exit;
 		}
 		
@@ -72,7 +86,17 @@ class Tweetr
 		if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))
 		{
 			$opt[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-			$opt[CURLOPT_USERPWD] = $_SERVER['PHP_AUTH_USER'] .':'. $_SERVER['PHP_AUTH_PW'];
+			
+			if(	isset($this->ghostName) && isset($this->ghostPass) && 
+				isset($this->userName) && isset($this->userPass) &&
+				$this->ghostName == $_SERVER['PHP_AUTH_USER'] && $this->ghostPass == $_SERVER['PHP_AUTH_PW'])
+			{
+				$opt[CURLOPT_USERPWD] = $this->userName .':'. $this->userPass;
+			}
+			else
+			{
+				$opt[CURLOPT_USERPWD] = $_SERVER['PHP_AUTH_USER'] .':'. $_SERVER['PHP_AUTH_PW'];
+			}
 		}
 
 		if($_SERVER[REQUEST_METHOD] == POST)
@@ -91,9 +115,13 @@ class Tweetr
 		curl_setopt_array($curl, $opt);
 
 		$response = curl_exec($curl);
-		$headers = curl_getinfo($curl);
-		$errorNumber = curl_errno($curl);
-		$errorMessage = curl_error($curl);
+		
+		if($this->debug)
+		{
+			$headers = curl_getinfo($curl);
+			$errorNumber = curl_errno($curl);
+			$errorMessage = curl_error($curl);	
+		}
 		curl_close($curl);
 		
 		if($this->debug)
