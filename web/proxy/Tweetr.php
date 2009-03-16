@@ -52,7 +52,6 @@ class Tweetr
 	
 	/**
 	 * Makes a request to twitter with the data provided and returns the result to the screen
-	 * @param (bool) $authenticated		Whether we are authenticated or not
 	 */
 	private function twitterRequest()
 	{
