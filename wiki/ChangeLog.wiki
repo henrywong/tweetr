@@ -1,6 +1,13 @@
 #summary changelog history
 #labels Featured
 
+===v0.93===
+
+*Fixes / Changes*
+  * PHP Proxy: Improvements from r23 turned out to introduce some problems with certain calls. Is fixed now.
+
+----
+
 ===v0.92===
 
 *Fixes / Changes*
