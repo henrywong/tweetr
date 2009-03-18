@@ -13,8 +13,8 @@ $tweetrOptions['baseURL'] = "/proxy";
 //$tweetrOptions['userAgent'] = "TweetrProxy/0.92";
 //$tweetrOptions['userAgentLink'] = "http://tweetr.googlecode.com/";
 //$tweetrOptions['debugMode'] = true;
-//$tweetrOptions['ghostName'] = "ghost";
-//$tweetrOptions['ghostPass'] = "ghost";
+//$tweetrOptions['ghostName'] = "your_ghost";
+//$tweetrOptions['ghostPass'] = "your_ghost";
 //$tweetrOptions['userName'] = "your_username";
 //$tweetrOptions['userPass'] = "your_password";
 
