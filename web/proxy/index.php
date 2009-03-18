@@ -10,7 +10,7 @@ include_once 'Tweetr.php';
  */
 
 $tweetrOptions['baseURL'] = "/proxy";
-//$tweetrOptions['userAgent'] = "TweetrProxy/0.92";
+//$tweetrOptions['userAgent'] = "TweetrProxy/0.93";
 //$tweetrOptions['userAgentLink'] = "http://tweetr.googlecode.com/";
 //$tweetrOptions['debugMode'] = true;
 //$tweetrOptions['ghostName'] = "your_ghost";

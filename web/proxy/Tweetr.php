@@ -10,7 +10,7 @@ class Tweetr
     //  Class variables
 	//
 	//--------------------------------------------------------------------------
-	const USER_AGENT = 'TweetrProxy/0.92';
+	const USER_AGENT = 'TweetrProxy/0.93';
 	const USER_AGENT_LINK = 'http://tweetr.googlecode.com/';
 	const BASEURL = "/proxy";
 	const DEBUGMODE = false;
