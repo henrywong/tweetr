@@ -10,13 +10,16 @@ include_once 'Tweetr.php';
  */
 
 $tweetrOptions['baseURL'] = "/proxy";
-//$tweetrOptions['userAgent'] = "TweetrProxy/0.93";
+//$tweetrOptions['userAgent'] = "TweetrProxy/0.94";
 //$tweetrOptions['userAgentLink'] = "http://tweetr.googlecode.com/";
 //$tweetrOptions['debugMode'] = true;
 //$tweetrOptions['ghostName'] = "your_ghost";
 //$tweetrOptions['ghostPass'] = "your_ghost";
 //$tweetrOptions['userName'] = "your_username";
 //$tweetrOptions['userPass'] = "your_password";
+//$tweetrOptions['cache_enabled'] = true;
+//$tweetrOptions['cache_time'] = 120; // 2 minutes
+//$tweetrOptions['cache_directory'] = "./cache/";
 
 $tweetr = new Tweetr($tweetrOptions);
 ?>

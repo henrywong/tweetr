@@ -56,12 +56,14 @@ package com.swfjunkie.tweetr.events
          * @param cancelable         Determines whether the Event object can be canceled. The default values is <code>false</code>. 
          * @param responseArray      An Array filled with Data Object returned after a succesful twitter request.
          * @param info               A Text Message containing information when a request fails or the status of your http request.
+         * @param data               The Received unparsed Data (mostly xml)
          */ 
-        public function TweetEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, responseArray:Array = null, info:String = null) 
+        public function TweetEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, responseArray:Array = null, info:String = null, data:Object = null) 
         {
 			super(type, bubbles, cancelable);
 			this.responseArray = responseArray;
 			this.info = info;
+			this.data = data;
         }
         //--------------------------------------------------------------------------
         //
@@ -72,6 +74,8 @@ package com.swfjunkie.tweetr.events
         public var responseArray:Array;
         /** A Text Message containing information when a request fails or the status of your http request */
         public var info:String;
+        /** The unparsed, untouched received data from twitter */
+        public var data:Object;
         //--------------------------------------------------------------------------
         //
         //  Methods

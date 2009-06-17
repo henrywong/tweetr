@@ -54,20 +54,19 @@ package com.swfjunkie.tweetr.data
         /**
          * Parses a Status XML to StatusData Objects
          * @param xml        The XML Response from Twitter
-         * @param isArray    Boolean indicating if we have received an array of elements in the XML
          * @return An Array filled with StatusData's
          */ 
-        public static function parseStatuses(xml:XML, isArray:Boolean = false):Array
+        public static function parseStatuses(xml:XML):Array
         {
             var statusData:StatusData;
             var userData:UserData;
             var array:Array = [];
-            var list:XMLList = (isArray) ? xml.status : null;
-            var n:int = (isArray) ? list.length() : 1;
+            var list:XMLList = xml..status;
+            var n:int = (list.length() == 0) ? 1 : list.length();
             
             for (var i:int = 0; i < n; i++)
             {
-                var node:XML = (isArray) ? list[i] as XML : xml;
+                var node:XML = (n > 1) ? list[i] as XML : xml;
             
                 statusData = new StatusData(node.created_at,
                                             node.id,
@@ -97,21 +96,20 @@ package com.swfjunkie.tweetr.data
         /**
          * Parses a Direct Message XML to DirectMessageData Objects
          * @param xml        The XML Response from Twitter
-         * @param isArray    Boolean indicating if we have received an array of elements in the XML
          * @return An Array filled with DirectMessageData's
          */ 
-        public static function parseDirectMessages(xml:XML, isArray:Boolean = false):Array
+        public static function parseDirectMessages(xml:XML):Array
         {
             var senderData:UserData;
             var recipientData:UserData;
             var directData:DirectMessageData;
             var array:Array = [];
-            var list:XMLList = (isArray) ? xml.direct_message : null;
-            var n:int = (isArray) ? list.length() : 1;
+            var list:XMLList = xml..direct_message;
+            var n:int = (list.length() == 0) ? 1 : list.length();
             
             for (var i:int = 0; i < n; i++)
             {
-                var node:XML = (isArray) ? list[i] as XML : xml;
+                var node:XML = (n > 1) ? list[i] as XML : xml;
             
                 directData = new DirectMessageData(
                                                     node.id,
@@ -156,22 +154,21 @@ package com.swfjunkie.tweetr.data
          /**
          * Parses a User XML to either UserData or ExtendedUserData Objects
          * @param xml        The XML Response from Twitter
-         * @param isArray    Boolean indicating if we have received an array of elements in the XML
          * @param extended   Should extended User Element be retrieved
          * @return An Array filled with either UserData or ExtendedUserData Objects
          */ 
-        public static function parseUserInfos(xml:XML, isArray:Boolean = false, extended:Boolean = false):Array
+        public static function parseUserInfos(xml:XML, extended:Boolean = false):Array
         {
             var statusData:StatusData;
             var userData:UserData;
             var extendedData:ExtendedUserData;
             var array:Array = [];
-            var list:XMLList = (isArray) ? xml.user : null;
-            var n:int = (isArray) ? list.length() : 1;
+            var list:XMLList = xml..user;
+            var n:int = (list.length() == 0) ? 1 : list.length();
             
             for (var i:int = 0; i < n; i++)
             {
-                var node:XML = (isArray) ? list[i] as XML : xml;
+                var node:XML = (n > 1) ? list[i] as XML : xml;
             
                 statusData = new StatusData(node.status.created_at,
                                             node.status.id,
