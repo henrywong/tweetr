@@ -15,8 +15,6 @@ package com.swfjunkie.tweetr
     import flash.net.URLRequestMethod;
     import flash.net.URLVariables;
     
-    import mx.events.IndexChangedEvent;
-    
     /**
 	 * Dispatched when the Tweetr has Completed a Request.
 	 * @eventType com.swfjunkie.Tweetr.events.TweetEvent.COMPLETE
@@ -77,7 +75,7 @@ package com.swfjunkie.tweetr
 		private static const DATA_FORMAT:String = "xml";
         
         /** Version String of the Tweetr Library */
-        public static const version:String = "0.9";		
+        public static const version:String = "0.94";		
 		
 		/** Return type defining what type of return Object you can expect, in this case: <code>StatusData</code> */
 		public static const RETURN_TYPE_STATUS:String = "status";
@@ -140,10 +138,11 @@ package com.swfjunkie.tweetr
         private var request:String;
         
         /**
-         * Get/Set if Browser interal Authorization Scheme should be used. 
-         * Only needs to be set to false if you use this library with AIR.
+         * Get/Set if the Authentication Headers should be used or not.
+         * There should not be any need to change this, but if you do 
+         * experience any problems, you can try and set it to false
          */ 
-        public var browserAuth:Boolean = true;
+        public var useAuthHeaders:Boolean = true;
         
         /**
          * @private 
@@ -155,7 +154,7 @@ package com.swfjunkie.tweetr
             {
                 urlRequest.url = "http://"+serviceHost+request;
             }
-            else if (!browserAuth)
+            else if (useAuthHeaders)
             {
                 var base64:Base64Encoder = new Base64Encoder();
                 base64.encode(_username+":"+_password);
@@ -215,8 +214,9 @@ package com.swfjunkie.tweetr
          * Returns the 20 most recent statuses from non-protected users who have set a custom user icon.  
          * Does not require authentication.  Note that the public timeline is cached for 60 seconds so 
          * requesting it more often than that is a waste of resources.
+         * @param additionalArguments   OPTIONAL - If you use the tweetr proxy you could send additional arguments that you can catch and process
          */
-        public function getPublicTimeLine():void
+        public function getPublicTimeLine(additionalArguments:Object = null):void
         {
             setGETRequest();
             _returnType = RETURN_TYPE_STATUS;
@@ -229,10 +229,11 @@ package com.swfjunkie.tweetr
          * This is the equivalent of /home on the Web.
          * @param since_id        Optional.  Returns only statuses with an ID greater than (that is, more recent than) the specified ID.
          * @param since_date      Optional. Narrows the returned results to just those statuses created after the specified HTTP-formatted date, up to 24 hours old.
+         * @param max_id          Optional.  Returns only statuses with an ID less than (that is, older than) the specified ID.
          * @param count           Optional. Specifies the number of statuses to retrieve. May not be greater than 200.
          * @param page            Optional. Provides paging. Ex. http://twitter.com/statuses/user_timeline.xml?page=3
          */ 
-        public function getFriendsTimeLine(since_id:String = null, since_date:String = null, count:int = 0, page:int = 0):void
+        public function getFriendsTimeLine(since_id:String = null, since_date:String = null, max_id:int = 0, count:int = 0, page:int = 0):void
         {
             var arguments:Array = [];
             checkCredentials();
@@ -243,6 +244,10 @@ package com.swfjunkie.tweetr
                 arguments.push("since_id="+since_id);
             if (since_date)
                 arguments.push("since="+since_date);
+            if (max_id > 0)
+            {
+                arguments.push("max_id="+max_id);
+            }
             if (count > 0)
             {
                 if (count > 200)
@@ -263,10 +268,10 @@ package com.swfjunkie.tweetr
          * @param id              Optional. Specifies the ID or screen name of the user for whom to return the friends_timeline.
          * @param since_id        Optional. Returns only statuses with an ID greater than (that is, more recent than) the specified ID.
          * @param since_date      Optional. Narrows the returned results to just those statuses created after the specified HTTP-formatted date, up to 24 hours old.
-         * @param count           Optional. Specifies the number of statuses to retrieve. May not be greater than 200.
+         * @param max_id          Optional. Optional.  Returns only statuses with an ID less than (that is, older than) the specified ID.
          * @param page            Optional. Provides paging. Ex. http://twitter.com/statuses/user_timeline.xml?page=3
          */ 
-        public function getUserTimeLine(id:String = null, since_id:String = null, since_date:String = null, count:int = 0, page:int = 0):void
+        public function getUserTimeLine(id:String = null, since_id:String = null, since_date:String = null, max_id:int = 0, page:int = 0):void
         {
             var arguments:Array = [];
             
@@ -280,11 +285,9 @@ package com.swfjunkie.tweetr
                 arguments.push("since_id="+since_id);
             if (since_date)
                 arguments.push("since="+since_date);
-            if (count > 0)
+            if (max_id > 0)
             {
-                if (count > 200)
-                    count = 200;
-                arguments.push("count="+count);
+                arguments.push("max_id="+max_id);
             }
             if (page > 0)
                 arguments.push("page="+page);
@@ -331,9 +334,10 @@ package com.swfjunkie.tweetr
          * Returns the 20 most recent @replies (status updates prefixed with @username) for the authenticating user.
          * @param since_id        Optional. Returns only statuses with an ID greater than (that is, more recent than) the specified ID.
          * @param since_date      Optional. Narrows the returned results to just those statuses created after the specified HTTP-formatted date, up to 24 hours old.
+         * @param max_id          Optional. Optional.  Returns only statuses with an ID less than (that is, older than) the specified ID.
          * @param page            Optional. Provides paging. Ex. http://twitter.com/statuses/user_timeline.xml?page=3
          */ 
-        public function getReplies(since_id:String = null, since_date:String = null, page:int = 0):void
+        public function getReplies(since_id:String = null, since_date:String = null, max_id:int = 0, page:int = 0):void
         {
             var arguments:Array = [];
             checkCredentials();
@@ -344,6 +348,8 @@ package com.swfjunkie.tweetr
                 arguments.push("since_id="+since_id);
             if (since_date)
                 arguments.push("since="+since_date);
+            if (max_id > 0)
+                arguments.push("max_id="+max_id);
             if (page > 0)
                 arguments.push("page="+page);
                 
@@ -409,7 +415,10 @@ package com.swfjunkie.tweetr
         public function getFollowers(id:String = null, page:int = 0):void
         {
             var arguments:Array = [];
-            checkCredentials();
+            
+            if(!id)
+                checkCredentials();
+            
             setGETRequest();
             _returnType = RETURN_TYPE_BASIC_USER_INFO;
             
@@ -439,7 +448,7 @@ package com.swfjunkie.tweetr
             
             if (id)
             {
-                request = URL_USER_DETAILS + "/"+id+"."+DATA_FORMAT;
+                request = URL_USER_DETAILS +id+"."+DATA_FORMAT;
             }
             else
             {
@@ -889,33 +898,32 @@ package com.swfjunkie.tweetr
         private function responseParser(data:Object):Array
         {
             var returnArray:Array = [];
-
+            var isArray:Boolean = false;
+            var xml:XML;
+            
             if (_returnType != RETURN_TYPE_TRENDS_RESULTS)
-            {
-                var xml:XML = new XML(data);
-                var isArray:Boolean = (xml.@type.toString() == "array") ? true : false;
-            }
+                xml = new XML(data);
             
             switch (_returnType)
             {
                 case RETURN_TYPE_STATUS:
                 {
-                    returnArray = DataParser.parseStatuses(xml,isArray);
+                    returnArray = DataParser.parseStatuses(xml);
                     break;
                 }
                 case RETURN_TYPE_DIRECT_MESSAGE:
                 {
-                    returnArray = DataParser.parseDirectMessages(xml,isArray);
+                    returnArray = DataParser.parseDirectMessages(xml);
                     break;
                 }
                 case RETURN_TYPE_BASIC_USER_INFO:
                 {
-                    returnArray = DataParser.parseUserInfos(xml,isArray);
+                    returnArray = DataParser.parseUserInfos(xml);
                     break;   
                 }
                 case RETURN_TYPE_EXTENDED_USER_INFO:
                 {
-                    returnArray = DataParser.parseUserInfos(xml,isArray,true);
+                    returnArray = DataParser.parseUserInfos(xml, true);
                     break;
                 }
                 case RETURN_TYPE_HASH:
@@ -951,19 +959,32 @@ package com.swfjunkie.tweetr
          * @private
          * Simply builds an argument string from the supplied arguments array
          */  
-        private function returnArgumentsString(arguments:Array):String
+        private function returnArgumentsString(arguments:Array = null, additionalArguments:Object = null):String
         {
             var str:String;
-            var n:int = arguments.length;
-            for (var i:int = 0; i < n; i++)
+            var n:int;
+            
+            if(arguments)
             {
-                if (i == 0)
-                    str = "?"
+                n = arguments.length;;
+                for (var i:int = 0; i < n; i++)
+                {
+                    if (i == 0)
+                        str = "?"
+                        
+                    str += arguments[i];
                     
-                str += arguments[i];
-                
-                if (i != (n-1))
-                    str += "&";
+                    if (i != (n-1))
+                        str += "&";
+                }
+            }
+            
+            if(additionalArguments)
+            {
+                for each (var arg:String in additionalArguments)
+                {
+                    
+                }
             }
             return str;
         }
@@ -1003,9 +1024,9 @@ package com.swfjunkie.tweetr
          * @private
          * Broadcast all TweetEvents from here
          */ 
-        private function broadcastTweetEvent(type:String, tweets:Array=null, info:String = null):void
+        private function broadcastTweetEvent(type:String, tweets:Array=null, info:String = null, data:Object = null):void
         {
-            dispatchEvent(new TweetEvent(type,false,false,tweets,info));
+            dispatchEvent(new TweetEvent(type,false,false,tweets,info,data));
         }
         //--------------------------------------------------------------------------
         //
@@ -1020,7 +1041,7 @@ package com.swfjunkie.tweetr
         {
             var returnArray:Array = responseParser(urlLoader.data);
             
-            broadcastTweetEvent(TweetEvent.COMPLETE,returnArray);
+            broadcastTweetEvent(TweetEvent.COMPLETE, returnArray, null, urlLoader.data);
         }
         
         /**
