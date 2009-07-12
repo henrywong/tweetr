@@ -1,13 +1,29 @@
 #summary Roadmap for tweetr.
 #labels Featured,Phase-Requirements
 
-= In General =
+===For Next Release (v0.95):===
 
-Keep the Library up to date and bug free.
+*Critical*
+   
+   * Add friendships/show Method
+   * Add methods to retrieve blocking information: blocks/exists, blocks/blocking, blocks/blocking/ids.
+   * Support the user_id and screen_name parameters for friendships/create, friendships/destroy, direct_messages/new, notifications/create, and notifications/leave for disambiguation
 
-= Details =
 
-Open tasks at the moment include:
-  
-  * implement the missing profile updating features
-  * Make sure there are no bugs
+*Major*
+
+   * OAuth Support
+
+*Minor*
+   * Streaming API Support
+----
+
+*Explanation of Critical, Major & Minor*
+
+Importance of tasks will be differentiated by _Critical_, _Major_ and _Minor_ - meaning:
+
+   * *Critical:* _This Task will definitely be implemented for the next Release._
+   * *Major:* _This Task has to be in the next Release if no major problems make it impossible to release it._
+   * *Minor:* _This would be nice to have, but if time is short, it will be pushed back for another release._
+
+----
