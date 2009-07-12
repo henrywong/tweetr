@@ -15,8 +15,6 @@ package com.swfjunkie.tweetr
     import flash.net.URLRequestMethod;
     import flash.net.URLVariables;
     
-    import nl.demonsters.debugger.MonsterDebugger;
-    
     /**
 	 * Dispatched when the Tweetr has Completed a Request.
 	 * @eventType com.swfjunkie.Tweetr.events.TweetEvent.COMPLETE
@@ -343,9 +341,9 @@ package com.swfjunkie.tweetr
             urlLoader.load(url);
         }
         
-        
         /**
-         * DEPRECATED use see@getMentions instead
+         * DEPRECATED use getMentions() instead.
+         * @see #getMentions()
          */ 
         public function getReplies(since_id:String = null, since_date:String = null, max_id:Number = 0, page:Number = 0):void
         {
@@ -379,8 +377,6 @@ package com.swfjunkie.tweetr
             urlLoader.load(url);
                 
         }
-        
-        
         
         /**
          * Destroys the status specified by the required ID parameter.
@@ -1110,27 +1106,21 @@ package com.swfjunkie.tweetr
             return str;
         }
         
-        /**
-         * @private 
-         */ 
+        /** @private */ 
         private function setGETRequest():void
         {
             urlRequest.method = URLRequestMethod.GET;
             urlRequest.data = null;
         }
         
-        /**
-         * @private
-         */ 
+        /**  @private */ 
         private function setPOSTRequest(vars:URLVariables=null):void
         {
             urlRequest.method = URLRequestMethod.POST;
             urlRequest.data = vars;
         }
         
-        /**
-         * @private
-         */ 
+        /** @private */ 
         private function checkCredentials():void
         {
             if (!_username && !_password)

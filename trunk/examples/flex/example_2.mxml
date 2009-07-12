@@ -22,10 +22,10 @@
 	 		
 	 		/**
 	 		 * @private
-	 		 * integer variable containing the returned tweet id
+	 		 * Number variable containing the returned tweet id
 	 		 * after we send a tweet
 	 		 */ 
-	 		private var tweetId:int;
+	 		private var tweetId:Number;
 	 		
 	 		/**
 	 		 * Here the Example actually starts ;)

@@ -10,8 +10,6 @@ package com.swfjunkie.tweetr.data
     import com.swfjunkie.tweetr.data.objects.UserData;
     import com.swfjunkie.tweetr.utils.TweetUtil;
     
-    import nl.demonsters.debugger.MonsterDebugger;
-    
     /**
      * Static Class doing nothing more than Parsing to Data Objects
      * @author Sandro Ducceschi [swfjunkie.com, Switzerland]
