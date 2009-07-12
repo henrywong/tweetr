@@ -118,7 +118,7 @@ class Tweetr
     private function twitterRequest($authentication = false)
     {   
     	/* caching - begin */
-		if($this->cacheEnabled && $this->cacheExists())
+		if($_SERVER['REQUEST_METHOD'] != "POST" && $this->cacheEnabled && $this->cacheExists())
 		{
 			header("Content-type: text/xml; charset=utf-8");
 			echo $this->cacheRead();
