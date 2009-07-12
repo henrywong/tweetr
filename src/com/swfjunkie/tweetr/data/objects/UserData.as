@@ -18,7 +18,7 @@ package com.swfjunkie.tweetr.data.objects
         //  Initialization
         //
         //--------------------------------------------------------------------------
-        public function UserData(   id:int = 0,
+        public function UserData(   id:Number = 0,
                                     name:String = null,
                                     screenName:String = null,
                                     location:String = null,
@@ -26,7 +26,7 @@ package com.swfjunkie.tweetr.data.objects
                                     profileImageUrl:String = null,
                                     url:String = null,
                                     profileProtected:Boolean = false,
-                                    followersCount:int = 0,
+                                    followersCount:Number = 0,
                                     extended:ExtendedUserData = null,
                                     lastStatus:StatusData = null) 
         {
@@ -48,7 +48,7 @@ package com.swfjunkie.tweetr.data.objects
         //
         //--------------------------------------------------------------------------
         
-        public var id:int;
+        public var id:Number;
         public var name:String;
         public var screenName:String;
         public var location:String;
@@ -56,7 +56,7 @@ package com.swfjunkie.tweetr.data.objects
         public var profileImageUrl:String;
         public var url:String;
         public var profileProtected:Boolean;
-        public var followersCount:int;
+        public var followersCount:Number;
         
         // if we are dealing with extended user information you will
         // have to put it or find it within an ExtendedUserData Object

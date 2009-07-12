@@ -19,21 +19,21 @@ package com.swfjunkie.tweetr.data.objects
         //
         //--------------------------------------------------------------------------
         public function ExtendedUserData(
-                                            profileBackgroundColor:int = 0,
-                                            profileTextColor:int = 0,
-                                            profileLinkColor:int = 0,
-                                            profileSidebarFillColor:int = 0,
-                                            profileSidebarBorderColor:int = 0,
-                                            friendsCount:int = 0,
+                                            profileBackgroundColor:Number = 0,
+                                            profileTextColor:Number = 0,
+                                            profileLinkColor:Number = 0,
+                                            profileSidebarFillColor:Number = 0,
+                                            profileSidebarBorderColor:Number = 0,
+                                            friendsCount:Number = 0,
                                             createdAt:String = null,
-                                            favouritesCount:int = 0,
-                                            utcOffset:int = 0,
+                                            favouritesCount:Number = 0,
+                                            utcOffset:Number = 0,
                                             timeZone:String = null,
                                             profileBackgroundImageUrl:String = null,
                                             profileBackgroundTile:Boolean = false,
                                             following:Boolean = false,
                                             notifications:Boolean = false,
-                                            statusesCount:int = 0
+                                            statusesCount:Number = 0
                                         ) 
         {
             this.profileBackgroundColor = profileBackgroundColor;
@@ -58,21 +58,21 @@ package com.swfjunkie.tweetr.data.objects
         //  Properties
         //
         //--------------------------------------------------------------------------
-        public var profileBackgroundColor:int;
-        public var profileTextColor:int;
-        public var profileLinkColor:int;
-        public var profileSidebarFillColor:int;
-        public var profileSidebarBorderColor:int;
-        public var friendsCount:int;
+        public var profileBackgroundColor:Number;
+        public var profileTextColor:Number;
+        public var profileLinkColor:Number;
+        public var profileSidebarFillColor:Number;
+        public var profileSidebarBorderColor:Number;
+        public var friendsCount:Number;
         public var createdAt:String;
-        public var favouritesCount:int;
-        public var utcOffset:int;
+        public var favouritesCount:Number;
+        public var utcOffset:Number;
         public var timeZone:String;
         public var profileBackgroundImageUrl:String;
         public var profileBackgroundTile:Boolean;
         public var following:Boolean;
         public var notifications:Boolean;
-        public var statusesCount:int;
+        public var statusesCount:Number;
         //--------------------------------------------------------------------------
         //
         //  API

@@ -18,20 +18,19 @@ package com.swfjunkie.tweetr.data.objects
         //  Initialization
         //
         //--------------------------------------------------------------------------
-        public function HashData(remainingHits:int, hourlyLimit:int, resetTimeInSeconds:int) 
+        public function HashData() 
         {
-            this.remainingHits = remainingHits;
-            this.hourlyLimit = hourlyLimit;
-            this.resetTimeInSeconds = resetTimeInSeconds;
         }
         //--------------------------------------------------------------------------
         //
         //  Properties
         //
         //--------------------------------------------------------------------------
-        public var resetTimeInSeconds:int;
-        public var remainingHits:int;
-        public var hourlyLimit:int;
+        public var resetTimeInSeconds:Number;
+        public var remainingHits:Number;
+        public var hourlyLimit:Number;
+        public var request:String;
+        public var error:String;
         //--------------------------------------------------------------------------
         //
         //  API

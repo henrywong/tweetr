@@ -33,7 +33,7 @@ public class Base64Encoder
      * 
      * The default is <code>10</code> to represent the line feed <code>\n</code>.
      */
-    public static var newLine:int = 10;
+    public static var newLine:Number = 10;
 
 	//--------------------------------------------------------------------------
 	//

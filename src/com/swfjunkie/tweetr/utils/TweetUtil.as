@@ -104,8 +104,8 @@ package com.swfjunkie.tweetr.utils
         public static function returnTweetAge(created_at:String):String
 		{
 			var time:Date = new Date();
-			var tp:Array; var year:int; var month:int; var date:int;
-			var hour:int; var minutes:int; var seconds:int; var timezone:int;
+			var tp:Array; var year:Number; var month:Number; var date:Number;
+			var hour:Number; var minutes:Number; var seconds:Number; var timezone:Number;
 			
 			if (created_at.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/g).length==1)
 			{
@@ -160,30 +160,35 @@ package com.swfjunkie.tweetr.utils
 			time.setUTCHours(hour, minutes, seconds);
 			
 			var currentTime:Date = new Date();
-			currentTime.setHours(currentTime.hours-1);
+			//currentTime.setHours(currentTime.hours-1);
 			var diffTime:int = currentTime.getTime() - time.getTime();
-			var diff:Date = new Date();
-			diff.setTime(diffTime);
-			
+			//var diff:Date = new Date();
+			//diff.setTime(diffTime);
+			var diffDays:int = (diffTime-(diffTime%86400000))/86400000;
+			diffTime=diffTime-(diffDays*86400000);
+			var diffHours:int = (diffTime-(diffTime%3600000))/3600000;
+			diffTime = diffTime-(diffHours*3600000);
+			var diffMins:int = (diffTime-(diffTime%60000))/60000;
+			diffTime = diffTime-(diffMins*60000);
+			var diffSecs:int = (diffTime-(diffTime%1000))/1000;
+
 			
             var txt:String;
-			if(diff.date > 1)
-			{
-			    txt = "yesterday or so..";
-			}
-			else if(diff.hours > 0)
-			{
-		        txt = diff.hours+"h ago";   
-			}
-			else if(diff.minutes > 0)
-			{
-		        txt = diff.minutes+"m ago";
-			}
-			else if(diff.seconds > 0)
-			{
-		        txt = diff.seconds+"s ago";
-			}
-			
+			if(diffDays > 0)
+			    txt = diffDays+" days ";
+			    
+			if(diffHours > 0)
+		        txt = txt+diffHours+" hours ";   
+
+			if(diffMins > 0)
+		        txt = txt+diffMins+" minutes ";
+
+			if(diffSecs > 0)
+		        txt = txt+diffSecs+" seconds ";
+
+			if (txt !=null)
+				txt = txt+" ago";
+				
 			return txt;
 		}
 		

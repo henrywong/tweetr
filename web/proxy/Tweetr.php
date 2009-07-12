@@ -10,7 +10,7 @@ class Tweetr
     //  Class variables
     //
     //--------------------------------------------------------------------------
-    const USER_AGENT = 'TweetrProxy/0.94';
+    const USER_AGENT = 'TweetrProxy/0.94 dev';
     const USER_AGENT_LINK = 'http://tweetr.googlecode.com/';
     const BASEURL = "/proxy";
     const DEBUGMODE = false;
@@ -18,6 +18,7 @@ class Tweetr
     const CACHE_ENABLED = false;
 	const CACHE_TIME = 120;	// 2 minutes
 	const CACHE_DIRECTORY = "./cache/";
+	
     //--------------------------------------------------------------------------
     //
     //  Initialization
@@ -92,11 +93,14 @@ class Tweetr
             }
             else if( strpos($this->url['path'], "statuses/friends_timeline") != false ||
                 strpos($this->url['path'], "statuses/user_timeline.") != false ||
-                strpos($this->url['path'], "statuses/replies.") != false ||
+                strpos($this->url['path'], "statuses/mentions.") != false ||
                 strpos($this->url['path'], "statuses/friends.") != false ||
                 strpos($this->url['path'], "statuses/followers") != false ||
                 strpos($this->url['path'], "direct_messages") != false ||
-                strpos($this->url['path'], "favorites.") != false )
+                strpos($this->url['path'], "favorites.") != false ||
+                strpos($this->url['path'], "friends/ids.") != false ||
+                strpos($this->url['path'], "followers/ids.") != false ||
+                strpos($this->url['path'], "saved_searches") != false)
             {
                 $this->requestCredentials();
             }

@@ -18,13 +18,13 @@ package com.swfjunkie.tweetr.data.objects
         //  Initialization
         //
         //--------------------------------------------------------------------------
-        public function StatusData( createdAt:String = null, 
-                                    id:int = 0, 
+        public function StatusData(createdAt:String = null, 
+                                    id:Number = 0, 
                                     text:String = null,
                                     source:String = null,
                                     truncated:Boolean = false,
-                                    inReplyToStatusId:int = 0,
-                                    inReplyToUserId:int = 0,
+                                    inReplyToStatusId:Number = 0,
+                                    inReplyToUserId:Number = 0,
                                     favorited:Boolean = false,
                                     inReplyToScreenName:String = null,
                                     user:UserData = null)
@@ -47,12 +47,12 @@ package com.swfjunkie.tweetr.data.objects
         //--------------------------------------------------------------------------
         
         public var createdAt:String;
-        public var id:int;
+        public var id:Number;
         public var text:String;
         public var source:String;
         public var truncated:Boolean;
-        public var inReplyToStatusId:int;
-        public var inReplyToUserId:int;
+        public var inReplyToStatusId:Number;
+        public var inReplyToUserId:Number;
         public var favorited:Boolean;
         public var inReplyToScreenName:String;
         public var user:UserData;
