@@ -3,11 +3,14 @@ package com.swfjunkie.tweetr.data
     import com.swfjunkie.tweetr.data.objects.DirectMessageData;
     import com.swfjunkie.tweetr.data.objects.ExtendedUserData;
     import com.swfjunkie.tweetr.data.objects.HashData;
+    import com.swfjunkie.tweetr.data.objects.SavedSearchData;
     import com.swfjunkie.tweetr.data.objects.SearchResultData;
     import com.swfjunkie.tweetr.data.objects.StatusData;
     import com.swfjunkie.tweetr.data.objects.TrendData;
     import com.swfjunkie.tweetr.data.objects.UserData;
     import com.swfjunkie.tweetr.utils.TweetUtil;
+    
+    import nl.demonsters.debugger.MonsterDebugger;
     
     /**
      * Static Class doing nothing more than Parsing to Data Objects
@@ -62,9 +65,9 @@ package com.swfjunkie.tweetr.data
             var userData:UserData;
             var array:Array = [];
             var list:XMLList = xml..status;
-            var n:int = (list.length() == 0) ? 1 : list.length();
+            var n:Number = (list.length() == 0) ? 1 : list.length();
             
-            for (var i:int = 0; i < n; i++)
+            for (var i:Number = 0; i < n; i++)
             {
                 var node:XML = (n > 1) ? list[i] as XML : xml;
             
@@ -93,6 +96,7 @@ package com.swfjunkie.tweetr.data
             }
             return array;
         }
+        
         /**
          * Parses a Direct Message XML to DirectMessageData Objects
          * @param xml        The XML Response from Twitter
@@ -105,9 +109,9 @@ package com.swfjunkie.tweetr.data
             var directData:DirectMessageData;
             var array:Array = [];
             var list:XMLList = xml..direct_message;
-            var n:int = (list.length() == 0) ? 1 : list.length();
+            var n:Number = (list.length() == 0) ? 1 : list.length();
             
-            for (var i:int = 0; i < n; i++)
+            for (var i:Number = 0; i < n; i++)
             {
                 var node:XML = (n > 1) ? list[i] as XML : xml;
             
@@ -157,16 +161,16 @@ package com.swfjunkie.tweetr.data
          * @param extended   Should extended User Element be retrieved
          * @return An Array filled with either UserData or ExtendedUserData Objects
          */ 
-        public static function parseUserInfos(xml:XML, extended:Boolean = false):Array
+        public static function parseUserInfos(xml:XML, extended:Boolean = true):Array
         {
             var statusData:StatusData;
             var userData:UserData;
             var extendedData:ExtendedUserData;
             var array:Array = [];
             var list:XMLList = xml..user;
-            var n:int = (list.length() == 0) ? 1 : list.length();
+            var n:Number = (list.length() == 0) ? 1 : list.length();
             
-            for (var i:int = 0; i < n; i++)
+            for (var i:Number = 0; i < n; i++)
             {
                 var node:XML = (n > 1) ? list[i] as XML : xml;
             
@@ -219,6 +223,54 @@ package com.swfjunkie.tweetr.data
         }
         
         /**
+         * Parses a ID XML to an Array
+         * @param xml        The XML Response from Twitter
+         * @return An Array filled numeric Id's
+         */ 
+        public static function parseIds(xml:XML):Array
+        {
+            var array:Array = [];
+            var list:XMLList = xml..id;
+            var n:Number = (list.length() == 0) ? 1 : list.length();
+            
+            for (var i:Number = 0; i < n; i++)
+            {
+                var node:XML = (n > 1) ? list[i] as XML : xml;
+                array.push(Number(node));
+            }
+            return array;
+        }
+        
+        
+        /**
+         * Parses a Saved Searches XML to SavedSearchData Objects
+         * @param xml        The XML Response from Twitter
+         * @return An Array filled with SavedSearchData Objects
+         */ 
+        public static function parseSavedSearches(xml:XML):Array    
+        {
+            var savedSearch:SavedSearchData;
+            var array:Array = [];
+            var list:XMLList = xml..saved_search;
+            var n:Number = (list.length() == 0) ? 1 : list.length();
+            
+            for (var i:Number = 0; i < n; i++)
+            {
+                var node:XML = list[i] as XML;
+                savedSearch = new SavedSearchData();
+                savedSearch.id = node.id;
+                savedSearch.name = node['name'];
+                savedSearch.query = node.query;
+                savedSearch.position = node.position;
+                savedSearch.createdAt = node.created_at;
+                array.push(savedSearch);
+            }
+            return array;
+        }
+        
+        
+        
+        /**
          * Parses a Hash XML to HashData Objects
          * @param xml  The XML Response from Twitter
          * @return An Array filled with HashData Objects
@@ -226,7 +278,13 @@ package com.swfjunkie.tweetr.data
         public static function parseHash(xml:XML):Array
         {
             var array:Array = [];
-            var hashData:HashData = new HashData(xml['remaining-hits'], xml['hourly-limit'], xml['reset-time-in-seconds']);
+            var hashData:HashData = new HashData();
+            hashData.hourlyLimit = xml['hourly-limit'];
+            hashData.remainingHits = xml['remaining-hits'];
+            hashData.resetTimeInSeconds = xml['reset-time-in-seconds'];
+            hashData.request = xml['request'];
+            hashData.error = xml['error'];
+            
             array.push(hashData);
             return array;   
         }
@@ -260,7 +318,7 @@ package com.swfjunkie.tweetr.data
             {
                 searchData = new SearchResultData();
                 var str:String = entry.ns::id;
-                var index:int = str.lastIndexOf(':');
+                var index:Number = str.lastIndexOf(':');
                 
                 searchData.id = parseInt(str.substring(index+1, str.length-1));
                 searchData.text = entry.ns::title;        
@@ -285,14 +343,14 @@ package com.swfjunkie.tweetr.data
         {
             var array:Array = [];
             var trendData:TrendData;
-            var startIndex:int = String(data).indexOf("[");
-            var endIndex:int = String(data).indexOf("]");
+            var startIndex:Number = String(data).indexOf("[");
+            var endIndex:Number = String(data).indexOf("]");
             var nameArr:Array = [];
             var urlArr:Array = [];
             var str:String = String(data).substring(startIndex+2,endIndex-1);
             var strArr:Array = str.split("},{");
-            var i:int = 0;
-            var n:int = strArr.length;
+            var i:Number = 0;
+            var n:Number = strArr.length;
             
             for (i = 0; i < n; i++)
             {
