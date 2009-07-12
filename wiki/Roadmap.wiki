@@ -11,7 +11,9 @@
 
 
 *Major*
-
+   
+   * Update URLShortener Service Class
+   * Add URLUnshortener Service Class
    * OAuth Support
 
 *Minor*
