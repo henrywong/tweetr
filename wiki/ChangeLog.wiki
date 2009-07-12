@@ -1,6 +1,39 @@
 #summary changelog history
 #labels Featured
 
+===v0.94===
+
+*Fixes / Changes*
+  * AS: fixed usertimeline retrieval parameters, removed count (not existent there) added max_id
+  * AS: removed an import within tweetr.as that should have not been there in the first place and caused errors for flash ide projects. (issue 5)
+  * AS: added max_id parameter to usertimeline, friendstimeline, getReplies
+  * AS: fixed getUserProfile() bug because of one / too many  (issue 4)
+  * AS: renamed public property browserAuth to useAuthHeaders and set it default to false
+  * AS  Fixed twitpocalypse problem by switching id typecasting from int to Number
+  * AS: Added getMentions to comply to twitters own "reply" renaming. getReplies still exists but is marked as deprecated.
+  * AS: Removed deprecated 'email' arguments
+  * AS: Added max_id argument support to getReceivedDirectMessages() and getSentDirectMessages() for direct message pagination
+  * AS: Fixed search so it realizes if you are looking for a phrase or just a word
+  * AS: Updated tweetr to always return ExtendedUserData to reflect twitter API changes
+  * AS: Updated TweetUtil.returnTweetAge() to reflect wishes and changes submitted by dougrdotnet &  mr.jawright (issue 3)
+  * AS: Fixed wrong event meta tags in Tweetr.as (issue 10)
+  
+  * PROXY: couple stability and compatibility fixes (thanks go out to @gladhon for these fixes)
+    
+*New*
+  * AS: TweetEvent also returns the unparsed data back within the event property "data"
+  * AS: Added getDirectMessage() to retrieve single direct message
+  * AS: Added endSession() Method that allows you to end a users session
+  * AS: Added Social Graph Methods: getFriendIds(), getFollowerIds()
+  * AS: Added Saved Search Methods: getSavedSearches(), getSavedSearch(), createSavedSearch(), destroySavedSearch();
+
+  * PROXY: Added charset parameter to headers sent for the xml by the proxy
+  * PROXY: Added simple caching of GET Requests. POST is never cached. (thx to @kngfu)
+
+  * CROSSDOMAIN: added request headers tag to xml  
+
+----
+
 ===v0.93===
 
 *Fixes / Changes*
