@@ -21,5 +21,8 @@ $tweetrOptions['baseURL'] = "/proxy";
 //$tweetrOptions['cache_time'] = 120; // 2 minutes
 //$tweetrOptions['cache_directory'] = "./cache/";
 
+if (phpversion() < 5)
+	die("PHP ".phpversion()." not supported. TweetrProxy requires atleast PHP5 or higher.");
+
 $tweetr = new Tweetr($tweetrOptions);
 ?>

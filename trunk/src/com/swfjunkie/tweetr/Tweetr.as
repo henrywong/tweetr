@@ -15,6 +15,8 @@ package com.swfjunkie.tweetr
     import flash.net.URLRequestMethod;
     import flash.net.URLVariables;
     
+    import nl.demonsters.debugger.MonsterDebugger;
+    
     /**
 	 * Dispatched when the Tweetr has Completed a Request.
 	 * @eventType com.swfjunkie.Tweetr.events.TweetEvent.COMPLETE
@@ -50,7 +52,7 @@ package com.swfjunkie.tweetr
         private static const URL_SINGLE_TWEET:String =              "/statuses/show/";
         private static const URL_SEND_UPDATE:String =               "/statuses/update.xml";
         private static const URL_DESTROY_TWEET:String =             "/statuses/destroy/";
-        private static const URL_MENTIONS:String =                   "/statuses/mentions.xml";
+        private static const URL_MENTIONS:String =                  "/statuses/mentions.xml";
         private static const URL_FRIENDS:String =                   "/statuses/friends";
         private static const URL_FOLLOWERS:String =                 "/statuses/followers";
         private static const URL_USER_DETAILS:String =              "/users/show/";
@@ -62,28 +64,36 @@ package com.swfjunkie.tweetr
         private static const URL_CREATE_FRIENDSHIP:String =         "/friendships/create/";
         private static const URL_DESTROY_FRIENDSHIP:String =        "/friendships/destroy/";
         private static const URL_FRIENDSHIP_EXISTS:String =         "/friendships/exists.xml";
+        private static const URL_FRIENDSHIP_SHOW:String =           "/friendships/show.xml";
         private static const URL_RATELIMIT_STATUS:String =          "/account/rate_limit_status.xml";
         private static const URL_UPDATE_PROFILE:String =            "/account/update_profile.xml";
-        private static const URL_RETRIEVE_FAVORITES:String =        "/favorites/";
+        private static const URL_RETRIEVE_FAVORITES:String =        "/favorites";
         private static const URL_CREATE_FAVORITE:String =           "/favorites/create/";
         private static const URL_DESTROY_FAVORITE:String =          "/favorites/destroy/";
         private static const URL_FOLLOW_USER:String =               "/notifications/follow/";
 		private static const URL_UNFOLLOW_USER:String =             "/notifications/leave/";
 		private static const URL_BLOCK_USER:String =                "/blocks/create/";
 		private static const URL_UNBLOCK_USER:String =              "/blocks/destroy/";
+		private static const URL_BLOCK_EXISTS:String =              "/blocks/exists/";
+		private static const URL_BLOCKS:String =                    "/blocks/blocking.xml";
+		private static const URL_BLOCK_IDS:String =                 "/blocks/blocking/ids.xml";
 		private static const URL_END_SESSION:String =               "/account/end_session.xml";
 		private static const URL_SOCIAL_GRAPH_FRIEND_IDS:String =   "/friends/ids";
 		private static const URL_SOCIAL_GRAPH_FOLLOWER_IDS:String = "/followers/ids";
+        private static const URL_REPORT_SPAM:String =               "/report_spam.xml";
 		private static const URL_SAVED_SEARCHES:String =            "/saved_searches.xml";
 		private static const URL_RETRIEVE_SAVED_SEARCH:String =     "/saved_searches/show/"; 
 		private static const URL_CREATE_SAVED_SEARCH:String =       "/saved_searches/create.xml";   
 		private static const URL_DESTROY_SAVED_SEARCH:String =      "/saved_searches/destroy/";   
 		private static const URL_TWITTER_SEARCH:String =            "http://search.twitter.com/search.atom";
 		private static const URL_TWITTER_TRENDS:String =            "http://search.twitter.com/trends.json";
+        private static const URL_TWITTER_TRENDS_CURRENT:String =    "http://search.twitter.com/trends/current.json";
+        private static const URL_TWITTER_TRENDS_DAILY:String =      "http://search.twitter.com/trends/daily.json";
+        private static const URL_TWITTER_TRENDS_WEEKLY:String =      "http://search.twitter.com/trends/weekly.json";
 		private static const DATA_FORMAT:String = "xml";
         
         /** Version String of the Tweetr Library */
-        public static const version:String = "0.94";		
+        public static const version:String = "0.95";		
 		
 		/** Return type defining what type of return Object you can expect, in this case: <code>StatusData</code> */
 		public static const RETURN_TYPE_STATUS:String = "status";
@@ -93,6 +103,8 @@ package com.swfjunkie.tweetr
 		public static const RETURN_TYPE_EXTENDED_USER_INFO:String = "extended_user_info";
 		/** Return type defining what type of return Object you can expect, in this case: <code>DirectMessageData</code> */
 		public static const RETURN_TYPE_DIRECT_MESSAGE:String = "direct_message";
+		/** Return type defining what type of return Object you can expect, in this case: <code>RelationData</code> */
+		public static const RETURN_TYPE_RELATIONSHIP:String = "relationship";
 		/** Return type defining what type of return Object you can expect, in this case a Boolean value */
 		public static const RETURN_TYPE_BOOLEAN:String = "bool";
 		/** Return type defining what type of return Object you can expect, in this case: <code>HashData</code> */
@@ -166,17 +178,23 @@ package com.swfjunkie.tweetr
             {
                 urlRequest.url = "http://"+serviceHost+request;
             }
-            else if (useAuthHeaders)
+            else
             {
                 var base64:Base64Encoder = new Base64Encoder();
                 base64.encode(_username+":"+_password);
-                urlRequest.requestHeaders = [new URLRequestHeader("Authorization", "Basic "+base64.toString())];
-                urlRequest.url = "http://"+serviceHost+request;
+                
+                if (useAuthHeaders)
+                {
+                    urlRequest.requestHeaders = [new URLRequestHeader("Authorization", "Basic "+base64.toString())];
+                    urlRequest.url = "http://"+serviceHost+request;
+                }
+                else
+                {
+                    request = (request.indexOf("?") != -1) ? request+"&hash="+base64.toString() : request+"?hash="+base64.toString();
+                    urlRequest.url = "http://"+serviceHost+request;
+                }
             }
-            else
-            {
-                urlRequest.url = "http://"+_username+":"+_password+"@"+serviceHost+request;
-            }
+            MonsterDebugger.trace(this, urlRequest.url);
             return urlRequest;
         }
         
@@ -637,6 +655,48 @@ package com.swfjunkie.tweetr
             urlLoader.load(url);
         }
         
+        /**
+         * Returns detailed information about the relationship between two users.
+         * @param targetId      Required. The user_id of the target user.
+         * @param sourceId      Optional. The user_id of the source user. If not defined you have to be authenticated to use this method.
+         */
+        public function showFriendshipById(targetId:String, sourceId:String = null):void
+        {
+            var arguments:Array = [];
+            _returnType = RETURN_TYPE_RELATIONSHIP;
+            setGETRequest();
+            
+            arguments.push("target_id="+targetId);
+            if (!sourceId)
+                checkCredentials();
+            else
+                arguments.push("source_id="+sourceId);
+            
+            request = URL_FRIENDSHIP_SHOW + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
+            urlLoader.load(url);
+        }
+        
+        /**
+         * Returns detailed information about the relationship between two users.
+         * @param targetName      Required. The screen_name of the target user.
+         * @param sourceName      Optional. The screen_name of the source user. If not defined you have to be authenticated to use this method.
+         */ 
+        public function showFriendshipByName(targetName:String, sourceName:String = null):void
+        {
+            var arguments:Array = [];
+            _returnType = RETURN_TYPE_RELATIONSHIP;
+            setGETRequest();
+            
+            arguments.push("target_screen_name="+targetName);
+            if (!sourceName)
+                checkCredentials();
+            else
+                arguments.push("source_screen_name="+sourceName);
+            
+            request = URL_FRIENDSHIP_SHOW + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
+            urlLoader.load(url);
+        }
+        
         //----------------------------------
 		//  Social Graph Methods
 		//----------------------------------
@@ -645,9 +705,9 @@ package com.swfjunkie.tweetr
          * Returns an array of numeric IDs for every user the specified user is following.
          * It's also possible to request another user's friends via the id parameter.
          * @param id      Optional. The ID or screen name of the user for whom to request a list of friends.
-         * @param page    Optional. Retrieves the next 100 friends.
+         * @param cursor    Optional. Breaks the results into pages. A single page contains 5000 ids. This is recommended for users with large ID lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
          */ 
-        public function getFriendIds(id:String = null, page:Number = 0):void
+        public function getFriendIds(id:String = null, cursor:Number = 0):void
         {
             var arguments:Array = [];
             
@@ -657,8 +717,8 @@ package com.swfjunkie.tweetr
             setGETRequest();
             _returnType = RETURN_TYPE_IDS;
             
-             if (page > 0)
-                arguments.push("page="+page);
+             if (cursor != 0)
+                arguments.push("cursor="+cursor);
             
             request = URL_SOCIAL_GRAPH_FRIEND_IDS + ( (id) ? "/"+id+"."+DATA_FORMAT : "."+DATA_FORMAT  ) + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
             urlLoader.load(url);
@@ -668,9 +728,9 @@ package com.swfjunkie.tweetr
          * Returns an array of numeric IDs for every user following the specified user.
          * It's also possible to request another user's followers via the id parameter.
          * @param id      Optional. The ID or screen name of the user for whom to request a list of friends.
-         * @param page    Optional. Retrieves the next 100 friends.
+         * @param cursor    Optional. Breaks the results into pages. A single page contains 5000 ids. This is recommended for users with large ID lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
          */ 
-        public function getFollowerIds(id:String = null, page:Number = 0):void
+        public function getFollowerIds(id:String = null, cursor:Number = 0):void
         {
             var arguments:Array = [];
             
@@ -680,10 +740,28 @@ package com.swfjunkie.tweetr
             setGETRequest();
             _returnType = RETURN_TYPE_IDS;
             
-             if (page > 0)
-                arguments.push("page="+page);
+             if (cursor != 0)
+                arguments.push("cursor="+cursor);
             
             request = URL_SOCIAL_GRAPH_FOLLOWER_IDS + ( (id) ? "/"+id+"."+DATA_FORMAT : "."+DATA_FORMAT  ) + ( (arguments.length != 0) ? returnArgumentsString(arguments) : "" );
+            urlLoader.load(url);
+        }
+        
+        //----------------------------------
+        //  Spam Reporting Methods
+        //----------------------------------
+        
+        /**
+         * The user specified in the id is blocked by the authenticated user and reported as a spammer.
+         */ 
+        public function reportSpammer(id:String):void
+        {
+            var vars:URLVariables = new URLVariables();
+            checkCredentials();
+            _returnType = RETURN_TYPE_EXTENDED_USER_INFO;
+            vars.id = id;
+            setPOSTRequest(vars);
+            request = URL_REPORT_SPAM;
             urlLoader.load(url);
         }
         
@@ -819,15 +897,14 @@ package com.swfjunkie.tweetr
 		
 		/**
 		 * Returns the 20 most recent favorite statuses for the authenticating user or user specified by the ID parameter in the requested format. 
-		 * @param id      Optional.  The ID or screen name of the user for whom to request a list of favorite statuses
+		 * @param id      Optional. The ID or screen name of the user for whom to request a list of favorite statuses
 		 * @param page    Optional. Retrieves the 20 next most recent favorite statuses.
 		 */
-		public function getFavorites(id:String, page:Number = 0):void
+		public function getFavorites(id:String = null, page:Number = 0):void
 		{
 		    var arguments:Array = [];
 		   
-		    if (!id)
-		        checkCredentials();
+            checkCredentials();
             
             setGETRequest();
             _returnType = RETURN_TYPE_STATUS;
@@ -964,6 +1041,45 @@ package com.swfjunkie.tweetr
 		    request = URL_UNBLOCK_USER;
 		    urlLoader.load(url);
 		}
+        
+        /**
+         * Returns if the authenticating user is blocking a target user. Will return the blocked user's object if a block exists, and an error hash object otherwise.
+         * @param id    The ID or screen_name of the potentially blocked user.
+         */ 
+        public function blockExists(id:String):void
+        {
+            checkCredentials();
+            setGETRequest();
+            _returnType = RETURN_TYPE_EXTENDED_USER_INFO;
+            
+            request = URL_BLOCK_EXISTS + id + ".xml";
+            urlLoader.load(url);   
+        }
+        
+        /**
+         * Returns an array of user objects that the authenticated user is blocking.
+         */ 
+        public function getBlocks():void
+        {
+            checkCredentials();
+            setGETRequest();
+            _returnType = RETURN_TYPE_EXTENDED_USER_INFO;
+            
+            request = URL_BLOCKS;
+            urlLoader.load(url);
+        }
+        
+        /**
+         * Returns an array of numeric user ids the authenticating user is blocking.
+         */ 
+        public function getBlockIds():void
+        {
+            checkCredentials();
+            setGETRequest();
+            _returnType = RETURN_TYPE_IDS;
+            request = URL_BLOCK_IDS;
+            urlLoader.load(url);
+        }
 		
 		//----------------------------------
 		//  Twitter Search Methods
@@ -1013,6 +1129,36 @@ package com.swfjunkie.tweetr
 		    setGETRequest();
 		    urlLoader.load(new URLRequest(URL_TWITTER_TRENDS));
 		}
+        
+        /**
+         * Returns the current top 10 trending topics on Twitter. 
+         */ 
+        public function currentTrends():void
+        {
+            _returnType = RETURN_TYPE_TRENDS_RESULTS;
+            setGETRequest();
+            urlLoader.load(new URLRequest(URL_TWITTER_TRENDS_CURRENT));
+        }
+        
+        /**
+         * Returns the top 20 trending topics for each hour in a given day.
+         */ 
+        public function dailyTrends():void
+        {
+            _returnType = RETURN_TYPE_TRENDS_RESULTS;
+            setGETRequest();
+            urlLoader.load(new URLRequest(URL_TWITTER_TRENDS_DAILY));
+        }
+        
+        /**
+         * Returns the top 30 trending topics for each day in a given week.
+         */ 
+        public function weeklyTrends():void
+        {
+            _returnType = RETURN_TYPE_TRENDS_RESULTS;
+            setGETRequest();
+            urlLoader.load(new URLRequest(URL_TWITTER_TRENDS_WEEKLY));
+        }
 		
 		
         /**
@@ -1058,6 +1204,9 @@ package com.swfjunkie.tweetr
                     
                 case RETURN_TYPE_EXTENDED_USER_INFO:
                     return DataParser.parseUserInfos(xml);
+                
+                case RETURN_TYPE_RELATIONSHIP:
+                    return DataParser.parseRelationship(xml);
                     
                 case RETURN_TYPE_HASH:
                     return DataParser.parseHash(xml);
@@ -1124,7 +1273,7 @@ package com.swfjunkie.tweetr
         private function checkCredentials():void
         {
             if (!_username && !_password)
-                throw new Error("Username and Password required but missing!");
+                throw new Error("Username and Password are required for this method call!");
         }
         //--------------------------------------------------------------------------
         //
@@ -1151,7 +1300,14 @@ package com.swfjunkie.tweetr
         private function handleTweetsLoaded(event:Event):void
         {
             var returnArray:Array = responseParser(urlLoader.data);
-            broadcastTweetEvent(TweetEvent.COMPLETE, returnArray, null, urlLoader.data);
+            var xml:XML = XML(urlLoader.data);
+            if (xml.localName() == RETURN_TYPE_HASH && xml.child("error").length() > 0)
+            {
+                _returnType = RETURN_TYPE_HASH;
+                broadcastTweetEvent(TweetEvent.FAILED, null, xml.error, DataParser.parseHash(xml)[0]);
+            }
+            else
+                broadcastTweetEvent(TweetEvent.COMPLETE, returnArray, null, urlLoader.data);
         }
         
         /**

@@ -3,6 +3,7 @@ package com.swfjunkie.tweetr.data
     import com.swfjunkie.tweetr.data.objects.DirectMessageData;
     import com.swfjunkie.tweetr.data.objects.ExtendedUserData;
     import com.swfjunkie.tweetr.data.objects.HashData;
+    import com.swfjunkie.tweetr.data.objects.RelationData;
     import com.swfjunkie.tweetr.data.objects.SavedSearchData;
     import com.swfjunkie.tweetr.data.objects.SearchResultData;
     import com.swfjunkie.tweetr.data.objects.StatusData;
@@ -221,6 +222,36 @@ package com.swfjunkie.tweetr.data
         }
         
         /**
+         * Parses a Relation XML to an Array
+         * @param xml        The XML Response from Twitter
+         * @return An Array with a source and a target RelationData
+         */
+        public static function parseRelationship(xml:XML):Array
+        {
+            var array:Array = [];
+            
+            var target:RelationData = new RelationData();
+            target.type = RelationData.RELATION_TYPE_TARGET;
+            target.id = parseFloat(xml.target.id);
+            target.screenName = xml.target.screen_name;
+            target.following = TweetUtil.stringToBool(xml.target.following);
+            target.followedBy = TweetUtil.stringToBool(xml.target.followed_by);
+            target.notificationsEnabled = TweetUtil.stringToBool(xml.target.notifications_enabled);
+            
+            var source:RelationData = new RelationData();
+            source.type = RelationData.RELATION_TYPE_SOURCE;
+            source.id = parseFloat(xml.source.id);
+            source.screenName = xml.source.screen_name;
+            source.following = TweetUtil.stringToBool(xml.source.following);
+            source.followedBy = TweetUtil.stringToBool(xml.source.followed_by);
+            source.notificationsEnabled = TweetUtil.stringToBool(xml.source.notifications_enabled);
+            
+            array.push(target);
+            array.push(source);
+            return array;
+        }
+        
+        /**
          * Parses a ID XML to an Array
          * @param xml        The XML Response from Twitter
          * @return An Array filled numeric Id's
@@ -265,7 +296,6 @@ package com.swfjunkie.tweetr.data
             }
             return array;
         }
-        
         
         
         /**
