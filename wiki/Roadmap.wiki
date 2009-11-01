@@ -6,7 +6,7 @@
 *Critical*
    
    * Fix Browser Authentication Issues once and for all. <font size="1" color="#008800">(*_DONE_*)</font>
-   * Update API and add misssing new API Methods. <font size="1" color="#2591E3">(*_IN PROGRESS_*)</font>
+   * Update API and add misssing new API Methods. <font size="1" color="#008800">(*_DONE_*)</font>
 
 *Major*
    
