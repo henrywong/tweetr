@@ -10,7 +10,7 @@ class Tweetr
     //  Class variables
     //
     //--------------------------------------------------------------------------
-    const USER_AGENT = 'TweetrProxy/0.94';
+    const USER_AGENT = 'TweetrProxy/0.95';
     const USER_AGENT_LINK = 'http://tweetr.googlecode.com/';
     const BASEURL = "/proxy";
     const DEBUGMODE = false;
@@ -82,32 +82,14 @@ class Tweetr
     {
         if($_SERVER['REQUEST_METHOD'] == "POST")
         {
-            $this->requestCredentials();
+            $this->checkCredentials();
         }
         else
         {
             if($this->url['path'] == $this->baseURL."/")
-            {
-                echo '<html><head><title>'.$this->userAgent.'</title></head><body><a href="'.$this->userAgentLink.'" title="Go to Website">'.$this->userAgent.'</a></body></html>';
-                exit;
-            }
-            else if( strpos($this->url['path'], "statuses/friends_timeline") != false ||
-                strpos($this->url['path'], "statuses/user_timeline.") != false ||
-                strpos($this->url['path'], "statuses/mentions.") != false ||
-                strpos($this->url['path'], "statuses/friends.") != false ||
-                strpos($this->url['path'], "statuses/followers") != false ||
-                strpos($this->url['path'], "direct_messages") != false ||
-                strpos($this->url['path'], "favorites.") != false ||
-                strpos($this->url['path'], "friends/ids.") != false ||
-                strpos($this->url['path'], "followers/ids.") != false ||
-                strpos($this->url['path'], "saved_searches") != false)
-            {
-                $this->requestCredentials();
-            }
+            	die('<html><head><title>'.$this->userAgent.'</title></head><body><a href="'.$this->userAgentLink.'" title="Go to Website">'.$this->userAgent.'</a></body></html>');
             else
-            {
-                $this->twitterRequest();
-            }
+            	$this->checkCredentials();
         }
     }
     
@@ -128,6 +110,9 @@ class Tweetr
     	
         $twitterURL = "http://twitter.com".str_replace($this->baseURL,"",$this->url['path']);
         
+        if($_SERVER['REQUEST_METHOD'] == "GET")
+        	$twitterURL .= "?".$this->url['query'];
+        
         $opt[CURLOPT_URL] = $twitterURL;
         $opt[CURLOPT_USERAGENT] = $this->userAgent;
         $opt[CURLOPT_RETURNTRANSFER] = true;
@@ -137,15 +122,20 @@ class Tweetr
         {   
             $opt[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
             
+            $creds = (isset($_GET['hash'])) ? $_GET['hash'] : $_POST['hash'];
+            $credsArr = explode(":", base64_decode($creds));
+            $credUser = $credsArr[0];
+            $credPass = $credsArr[1];
+            
             if( isset($this->ghostName) && isset($this->ghostPass) && 
                 isset($this->userName) && isset($this->userPass) &&
-                $this->ghostName == $_SERVER['PHP_AUTH_USER'] && $this->ghostPass == $_SERVER['PHP_AUTH_PW'])
+                $this->ghostName == $credUser && $this->ghostPass == $credPass)
             {
                 $opt[CURLOPT_USERPWD] = $this->userName .':'. $this->userPass;
             }
             else
             {
-                $opt[CURLOPT_USERPWD] = $_SERVER['PHP_AUTH_USER'] .':'. $_SERVER['PHP_AUTH_PW'];
+                $opt[CURLOPT_USERPWD] = $credUser .':'. $credPass;
 
             }
             
@@ -162,6 +152,7 @@ class Tweetr
             $opt[CURLOPT_HTTPHEADER] = array('Expect:');
         }
         
+        $this->log($twitterURL);
         //do the request
         $curl = curl_init();
         curl_setopt_array($curl, $opt);
@@ -208,19 +199,12 @@ class Tweetr
     /**
      * Requests Basic Authentication
      */
-    private function requestCredentials()
+    private function checkCredentials()
     {
-        if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['PHP_AUTH_PW']))
-        {
-           header('WWW-Authenticate: Basic realm="Tweetr Realm"');
-           header('HTTP/1.0 401 Unauthorized');
-           echo 'Credentials missing';
-           exit;
-        } 
+    	if (!isset($_GET['hash']) && !isset($_POST['hash']))
+    		$this->twitterRequest();
         else
-        {
             $this->twitterRequest(true);
-        }
     }
     
     /**
@@ -273,9 +257,7 @@ class Tweetr
 		foreach($_GET as $key => $value) 		$keys[] = $key . "=" . urlencode($value) ;
 		
 		$keys[] = "app=tweetr";
-		$keys[] = "requrl=".urlencode($this->url['path']) ;
-		$keys[] = "tuser=".urlencode($_SERVER['PHP_AUTH_USER']) ;
-		$keys[] = "tpass=".urlencode($_SERVER['PHP_AUTH_PW']) ;
+		$keys[] = "requrl=".urlencode($this->url['path']);
 		sort($keys);
 		return md5(implode('&', $keys));
 	}
