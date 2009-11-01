@@ -5,8 +5,8 @@
 
 *Critical*
    
-   * Fix Browser Authentication Issues once and for all
-   * Update API and add misssing new API Methods
+   * Fix Browser Authentication Issues once and for all. <font size="1" color="#008800">(*_DONE_*)</font>
+   * Update API and add misssing new API Methods. <font size="1" color="#2591E3">(*_IN PROGRESS_*)</font>
 
 *Major*
    
@@ -14,8 +14,16 @@
    * Add URLUnshortener Service Class
 
 *Minor*
-   * OAuth Support 
+   * OAuth Support <font size="1" color="#F7C709">(*_DELAYED_*)</font>
    * Streaming API Support
+
+<wiki:comment>
+<font size="1" color="#008800">(*_DONE_*)</font>
+<font size="1" color="#2591E3">(*_IN PROGRESS_*)</font>
+<font size="1" color="#F7C709">(*_DELAYED_*)</font>
+<font size="1" color="#C53C0F">(*_WON'T FIX_*)</font>
+</wiki:comment>
+
 ----
 
 *Explanation of Critical, Major & Minor*
