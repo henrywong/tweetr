@@ -5,18 +5,16 @@
 
 *Critical*
    
-   * Add friendships/show Method
-   * Add methods to retrieve blocking information: blocks/exists, blocks/blocking, blocks/blocking/ids.
-   * Support the user_id and screen_name parameters for friendships/create, friendships/destroy, direct_messages/new, notifications/create, and notifications/leave for disambiguation
-
+   * Fix Browser Authentication Issues once and for all
+   * Update API and add misssing new API Methods
 
 *Major*
    
    * Update URLShortener Service Class
    * Add URLUnshortener Service Class
-   * OAuth Support
 
 *Minor*
+   * OAuth Support 
    * Streaming API Support
 ----
 
