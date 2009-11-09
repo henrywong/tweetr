@@ -10,8 +10,8 @@
 
 *Major*
    
-   * Update URLShortener Service Class
-   * Add URLUnshortener Service Class
+   * Update URLShortener Service Class <font size="1" color="#F7C709">(*_DELAYED_*)</font>
+   * Add URLUnshortener Service Class <font size="1" color="#008800">(*_DONE_*)</font>
 
 *Minor*
    * OAuth Support <font size="1" color="#F7C709">(*_DELAYED_*)</font>
