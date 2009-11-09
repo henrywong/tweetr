@@ -10,10 +10,10 @@
 
 *Major*
    
-   * Update URLShortener Service Class <font size="1" color="#F7C709">(*_DELAYED_*)</font>
-   * Add URLUnshortener Service Class <font size="1" color="#008800">(*_DONE_*)</font>
+      * Add URLUnshortener Service Class <font size="1" color="#008800">(*_DONE_*)</font>
 
 *Minor*
+   * Update URLShortener Service Class <font size="1" color="#F7C709">(*_DELAYED_*)</font>
    * OAuth Support <font size="1" color="#F7C709">(*_DELAYED_*)</font>
    * Streaming API Support
 
