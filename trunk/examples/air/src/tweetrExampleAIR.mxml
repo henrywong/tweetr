@@ -30,9 +30,9 @@
         	    // create a tweetr instance
             	tweetr = new Tweetr();
             	
-            	// set the browserAuth to false so we actually use
+            	// set useAuthHeader to true so we actually use
             	// the AIR authentication scheme
-                tweetr.browserAuth = false;
+                tweetr.useAuthHeaders = true;
                 
                 // pass the username & password
                 tweetr.username = "tweetrapi";

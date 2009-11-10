@@ -188,6 +188,8 @@ package com.swfjunkie.tweetr.utils
 
 			if (txt !=null)
 				txt = txt+" ago";
+            else
+                txt = "";
 				
 			return txt;
 		}
