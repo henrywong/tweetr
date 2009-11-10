@@ -55,6 +55,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("CÂ
   Dispatched when the instance has successfully shortened an url.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/utils/class-list.html');" href="com/swfjunkie/tweetr/utils/URLUnshortener.html#event:complete">complete</a> &mdash; Event in class com.swfjunkie.tweetr.utils.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/utils/class-list.html');" href="com/swfjunkie/tweetr/utils/URLUnshortener.html">URLUnshortener</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+     Dispatched when the instance has successfully unshortened an url.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/events/class-list.html');" href="com/swfjunkie/tweetr/events/TweetEvent.html#COMPLETE">COMPLETE</a> &mdash; Constant static property in class com.swfjunkie.tweetr.events.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/events/class-list.html');" href="com/swfjunkie/tweetr/events/TweetEvent.html">TweetEvent</a></td>
 </tr>
 <tr>
@@ -63,6 +70,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("CÂ
    <table class=innertable>
    <tr><th>Property</th><th>Value</th></tr>
    <tr><td>responseArray</td><td>Array filled with Data Objects containing the results of your request</td></tr>
+   <tr><td>data</td><td>Contains the unparsed raw data returned from twitter</td></tr>
+   <tr><td>cursor</td><td>Contains a Cursor Data Object if the response includes cursor information</td></tr>
    </table>
       </td>
 </tr>
@@ -141,11 +150,45 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("CÂ
          Befriends the user specified in the ID parameter as the authenticating user.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/class-list.html');" href="com/swfjunkie/tweetr/Tweetr.html#createList()">createList</a>(name, isPublic) &mdash; Method in class com.swfjunkie.tweetr.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/class-list.html');" href="com/swfjunkie/tweetr/Tweetr.html">Tweetr</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+         <b><font color="#00AA00">NEW</font></b> - Creates a new list for the authenticated user.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/class-list.html');" href="com/swfjunkie/tweetr/Tweetr.html#createSavedSearch()">createSavedSearch</a>(query) &mdash; Method in class com.swfjunkie.tweetr.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/class-list.html');" href="com/swfjunkie/tweetr/Tweetr.html">Tweetr</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
          Creates a saved search for the authenticated user.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/class-list.html');" href="com/swfjunkie/tweetr/Tweetr.html#currentTrends()">currentTrends</a>() &mdash; Method in class com.swfjunkie.tweetr.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/class-list.html');" href="com/swfjunkie/tweetr/Tweetr.html">Tweetr</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+         <b><font color="#00AA00">NEW</font></b> - Returns the current top 10 trending topics on Twitter.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/events/class-list.html');" href="com/swfjunkie/tweetr/events/TweetEvent.html#cursor">cursor</a> &mdash; Property in class com.swfjunkie.tweetr.events.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/events/class-list.html');" href="com/swfjunkie/tweetr/events/TweetEvent.html">TweetEvent</a></td>
+</tr>
+<tr>
+<td width="20"></td><td> A CursorData Object if the response supplies this information </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/data/objects/class-list.html');" href="com/swfjunkie/tweetr/data/objects/CursorData.html">CursorData</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/data/objects/class-list.html');" href="com/swfjunkie/tweetr/data/objects/package-detail.html">com.swfjunkie.tweetr.data.objects</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+     Cursor Data Object
+     </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/data/objects/class-list.html');" href="com/swfjunkie/tweetr/data/objects/CursorData.html#CursorData()">CursorData</a>(nextCursor, previousCursor) &mdash; Constructor in class com.swfjunkie.tweetr.data.objects.<a onclick="javascript:loadClassListFrame('com/swfjunkie/tweetr/data/objects/class-list.html');" href="com/swfjunkie/tweetr/data/objects/CursorData.html">CursorData</a></td>
+</tr>
+<tr>
+<td width="20"></td><td></td>
 </tr>
 <tr>
 <td style="padding-bottom:20px" colspan="2"></td>
@@ -155,8 +198,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("CÂ
 </tr>
 </table>
 <p></p>
-<center class="copyright">[swfjunkie.com] - Open source under Simplified BSD</center>
+<center class="copyright">[swfjunkie.com] - Open source under GNU Lesser GPL</center>
 </div>
 </body>
 </html>
-<!--[swfjunkie.com] - Open source under Simplified BSD-->
+<!--[swfjunkie.com] - Open source under GNU Lesser GPL-->

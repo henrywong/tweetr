@@ -1,5 +1,7 @@
 package com.swfjunkie.tweetr.events
 {
+	import com.swfjunkie.tweetr.data.objects.CursorData;
+	
 	import flash.events.Event;
 	
     /**
@@ -19,6 +21,8 @@ package com.swfjunkie.tweetr.events
 		 * <table class=innertable>
 		 * <tr><th>Property</th><th>Value</th></tr>
 		 * <tr><td>responseArray</td><td>Array filled with Data Objects containing the results of your request</td></tr>
+		 * <tr><td>data</td><td>Contains the unparsed raw data returned from twitter</td></tr>
+		 * <tr><td>cursor</td><td>Contains a Cursor Data Object if the response includes cursor information</td></tr>
 		 * </table>
 		 *
 		 * @eventType complete
@@ -57,13 +61,15 @@ package com.swfjunkie.tweetr.events
          * @param responseArray      An Array filled with Data Object returned after a succesful twitter request.
          * @param info               A Text Message containing information when a request fails or the status of your http request.
          * @param data               The Received unparsed Data (mostly xml)
+         * @param cursor             If the response supplied cursor data information, this attribute will have a CursorData Object
          */ 
-        public function TweetEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, responseArray:Array = null, info:String = null, data:Object = null) 
+        public function TweetEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, responseArray:Array = null, info:String = null, data:Object = null, cursor:CursorData = null) 
         {
 			super(type, bubbles, cancelable);
 			this.responseArray = responseArray;
 			this.info = info;
 			this.data = data;
+            this.cursor = cursor;
         }
         //--------------------------------------------------------------------------
         //
@@ -76,6 +82,8 @@ package com.swfjunkie.tweetr.events
         public var info:String;
         /** The unparsed, untouched received data from twitter */
         public var data:Object;
+        /** A CursorData Object if the response supplies this information */
+        public var cursor:CursorData;
         //--------------------------------------------------------------------------
         //
         //  Methods

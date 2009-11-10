@@ -18,7 +18,7 @@ package com.swfjunkie.tweetr.data.objects
         //  Initialization
         //
         //--------------------------------------------------------------------------
-        public function UserData(   id:Number = 0,
+        public function UserData( id:Number = 0,
                                     name:String = null,
                                     screenName:String = null,
                                     location:String = null,
