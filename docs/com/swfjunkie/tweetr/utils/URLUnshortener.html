@@ -4,22 +4,22 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="URLShortener,com.swfjunkie.tweetr.utils.URLShortener,url,destroy,shorten" name="keywords">
-<title>com.swfjunkie.tweetr.utils.URLShortener</title>
+<meta content="URLUnshortener,com.swfjunkie.tweetr.utils.URLUnshortener,url,destroy,unshorten" name="keywords">
+<title>com.swfjunkie.tweetr.utils.URLUnshortener</title>
 </head>
 <body>
 <script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
 <!--
-				asdocTitle = 'URLShortener - Tweetr Documentation';
+				asdocTitle = 'URLUnshortener - Tweetr Documentation';
 				var baseRef = '../../../../';
 				window.onload = configPage;
 			--></script>
 <table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
 <tr>
-<td align="left" class="titleTableTitle">Tweetr Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/swfjunkie/tweetr/utils/URLShortener.html&amp;com/swfjunkie/tweetr/utils/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+<td align="left" class="titleTableTitle">Tweetr Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/swfjunkie/tweetr/utils/URLUnshortener.html&amp;com/swfjunkie/tweetr/utils/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
 </tr>
 <tr class="titleTableRow2">
-<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;URLShortener</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;URLUnshortener</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
 </tr>
 <tr class="titleTableRow3">
 <td colspan="2">&nbsp;</td>
@@ -27,7 +27,7 @@
 </table>
 <script type="text/javascript" language="javascript">
 <!--
-if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class URLShortener"); titleBar_setSubNav(false,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class URLUnshortener"); titleBar_setSubNav(false,true,false,false,true,false,true,false,false,false,false,false,false,false);}
 --></script>
 <div class="MainContent">
 <table cellspacing="0" cellpadding="0" class="classHeaderTable">
@@ -35,14 +35,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.swfjunkie.tweetr.utils</a></td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class URLShortener</td>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class URLUnshortener</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">URLShortener <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">URLUnshortener <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
 </tr>
 </table>
 <p></p>
-     URL Shortener Class using http://is.gd/ public service
+     URL Unshortener Class using http://untiny.me/ public service
+     For a list of supported services see <a href="http://untiny.me/api/1.0/services/">http://untiny.me/api/1.0/services/</a>
      <p></p>
 <br>
 <hr>
@@ -56,9 +57,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#url">url</a> : String<div class="summaryTableDescription">[read-only]
-         The Shortened URL
+         The Unshortened URL
          </div>
-</td><td class="summaryTableOwnerCol">URLShortener</td>
+</td><td class="summaryTableOwnerCol">URLUnshortener</td>
 </tr>
 </table>
 </div>
@@ -72,11 +73,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#URLShortener()">URLShortener</a>()</div>
+<a class="signatureLink" href="#URLUnshortener()">URLUnshortener</a>()</div>
 <div class="summaryTableDescription"> 
          Creates a new URLShortener Instance 
          </div>
-</td><td class="summaryTableOwnerCol">URLShortener</td>
+</td><td class="summaryTableOwnerCol">URLUnshortener</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
@@ -85,16 +86,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summaryTableDescription">
          Completely destroys the instance and frees all objects for the garbage
          collector by setting their references to null.</div>
-</td><td class="summaryTableOwnerCol">URLShortener</td>
+</td><td class="summaryTableOwnerCol">URLUnshortener</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#shorten()">shorten</a>(url:String):void</div>
+<a class="signatureLink" href="#unshorten()">unshorten</a>(url:String):void</div>
 <div class="summaryTableDescription">
-         Shortens the given URL
+         Unshortens the given URL
          </div>
-</td><td class="summaryTableOwnerCol">URLShortener</td>
+</td><td class="summaryTableOwnerCol">URLUnshortener</td>
 </tr>
 </table>
 </div>
@@ -111,7 +112,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#event:complete">complete</a>
 </div>
 </td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when the instance has successfully shortened an url.</td><td class="summaryTableOwnerCol">URLShortener</td>
+     Dispatched when the instance has successfully unshortened an url.</td><td class="summaryTableOwnerCol">URLUnshortener</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
@@ -119,7 +120,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#event:ioError">ioError</a>
 </div>
 </td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when the instance has encountered an error while trying to encode your url.</td><td class="summaryTableOwnerCol">URLShortener</td>
+     Dispatched when the instance has encountered an error while trying to unshorten your url.</td><td class="summaryTableOwnerCol">URLUnshortener</td>
 </tr>
 </table>
 </div>
@@ -138,7 +139,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>url:String</code>&nbsp;&nbsp;[read-only]<p>
-         The Shortened URL
+         The Unshortened URL
          </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get url():String</code>
@@ -146,14 +147,14 @@ showHideInherited();
 </div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
-<a name="URLShortener()"></a>
+<a name="URLUnshortener()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">URLShortener</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+<td class="detailHeaderName">URLUnshortener</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public function URLShortener()</code><p> 
+<code>public function URLUnshortener()</code><p> 
          Creates a new URLShortener Instance 
          </p></div>
 <a name="methodDetail"></a>
@@ -169,19 +170,19 @@ showHideInherited();
          Completely destroys the instance and frees all objects for the garbage
          collector by setting their references to null.
          </p></div>
-<a name="shorten()"></a>
+<a name="unshorten()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">shorten</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">unshorten</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public function shorten(url:String):void</code><p>
-         Shortens the given URL
+<code>public function unshorten(url:String):void</code><p>
+         Unshortens the given URL
          </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">url</span>:String</code> &mdash;   Long URL that should be shortened
+<td width="20px"></td><td><code><span class="label">url</span>:String</code> &mdash;   Short URL that should be unshortened
          </td>
 </tr>
 </table>
@@ -197,8 +198,8 @@ showHideInherited();
 <span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
 <br>
 <p></p><p>
-  Dispatched when the instance has successfully shortened an url.
-  </p></div>
+     Dispatched when the instance has successfully unshortened an url.
+     </p></div>
 <a name="event:ioError"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -209,8 +210,8 @@ showHideInherited();
 <span class="label">Event object type: </span><a href=""><code>flash.events.IOErrorEvent</code></a>
 <br>
 <p></p><p>
-  Dispatched when the instance has encountered an error while trying to encode your url.
-  </p></div>
+     Dispatched when the instance has encountered an error while trying to unshorten your url.
+     </p></div>
 <br>
 <br>
 <hr>

@@ -12,13 +12,13 @@ class Tweetr
     //--------------------------------------------------------------------------
     const USER_AGENT = 'TweetrProxy/0.95';
     const USER_AGENT_LINK = 'http://tweetr.googlecode.com/';
-    const BASEURL = "/proxy";
+    const BASEURL = '/proxy';
     const DEBUGMODE = false;
-    const GHOST_DEFAULT = "ghost";
+    const GHOST_DEFAULT = 'ghost';
     const CACHE_ENABLED = false;
 	const CACHE_TIME = 120;	// 2 minutes
-	const CACHE_DIRECTORY = "./cache/";
-	
+	const CACHE_DIRECTORY = 'cache';
+	const UPLOAD_DIRECTORY = 'tmp';
     //--------------------------------------------------------------------------
     //
     //  Initialization
@@ -35,6 +35,7 @@ class Tweetr
         $this->baseURL = (isset($options['baseURL'])) ? $options['baseURL'] : self::BASEURL;
         $this->userAgent = (isset($options['userAgent'])) ? $options['userAgent'] : self::USER_AGENT;
         $this->userAgentLink = (isset($options['userAgentLink'])) ? $options['userAgentLink'] : self::USER_AGENT_LINK;
+        $this->indexContent = (isset($options['indexContent'])) ? $options['indexContent'] : '<html><head><title>'.$this->userAgent.'</title></head><body><a href="'.$this->userAgentLink.'" title="Go to Website">'.$this->userAgent.'</a></body></html>';
         $this->debug = (isset($options['debugMode'])) ? $options['debugMode'] : self::DEBUGMODE;
         
         $this->ghostName = (isset($options['ghostName'])) ? $options['ghostName'] : self::GHOST_DEFAULT;
@@ -44,7 +45,8 @@ class Tweetr
         
         $this->cacheEnabled = (isset($options['cache_enabled'])) ? $options['cache_enabled'] : self::CACHE_ENABLED;
         $this->cacheTime = (isset($options['cache_time'])) ? $options['cache_time'] : self::CACHE_TIME;
-        $this->cacheDirectory = (isset($options['cache_directory'])) ? $options['cache_directory'] : self::CACHE_DIRECTORY;
+        $this->cacheDirectory = "./".((isset($options['cache_directory'])) ? $options['cache_directory'] : self::CACHE_DIRECTORY)."/";
+        $this->uploadDirectory = "./".((isset($options['upload_directory'])) ? $options['upload_directory'] : self::UPLOAD_DIRECTORY)."/";
 
         
         // set the current url and parse it
@@ -62,14 +64,15 @@ class Tweetr
     private $baseURL;
     private $userAgent;
     private $userAgentLink;
+    private $indexContent;
     private $userName;
     private $userPass;
     private $ghostName;
     private $ghostPass;
-    
     private $cacheEnabled;
     private $cacheTime;
     private $cacheDirectory;
+    private $uploadDirectory;
     //--------------------------------------------------------------------------
     //
     //  Methods
@@ -80,14 +83,14 @@ class Tweetr
      */
     private function parseRequest()
     {
-        if($_SERVER['REQUEST_METHOD'] == "POST")
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $this->checkCredentials();
         }
         else
         {
-            if($this->url['path'] == $this->baseURL."/")
-            	die('<html><head><title>'.$this->userAgent.'</title></head><body><a href="'.$this->userAgentLink.'" title="Go to Website">'.$this->userAgent.'</a></body></html>');
+            if($this->url['path'] == $this->baseURL.'/')
+            	die(urldecode($this->indexContent));
             else
             	$this->checkCredentials();
         }
@@ -100,19 +103,19 @@ class Tweetr
     private function twitterRequest($authentication = false)
     {   
     	/* caching - begin */
-		if($_SERVER['REQUEST_METHOD'] != "POST" && $this->cacheEnabled && $this->cacheExists())
+		if($_SERVER['REQUEST_METHOD'] != 'POST' && $this->cacheEnabled && $this->cacheExists())
 		{
-			header("Content-type: text/xml; charset=utf-8");
+			header('Content-type: text/xml; charset=utf-8');
 			echo $this->cacheRead();
 			return;
 		}
 		/* caching - end */
     	
-        $twitterURL = "http://twitter.com".str_replace($this->baseURL,"",$this->url['path']);
+        $twitterURL = 'http://api.twitter.com/1'.str_replace($this->baseURL,'',$this->url['path']);
         
-        if($_SERVER['REQUEST_METHOD'] == "GET")
-        	$twitterURL .= "?".$this->url['query'];
-        
+        if($_SERVER['REQUEST_METHOD'] == 'GET')
+        	$twitterURL .= '?'.$this->url['query'];
+       	
         $opt[CURLOPT_URL] = $twitterURL;
         $opt[CURLOPT_USERAGENT] = $this->userAgent;
         $opt[CURLOPT_RETURNTRANSFER] = true;
@@ -123,7 +126,7 @@ class Tweetr
             $opt[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
             
             $creds = (isset($_GET['hash'])) ? $_GET['hash'] : $_POST['hash'];
-            $credsArr = explode(":", base64_decode($creds));
+            $credsArr = explode(':', base64_decode($creds));
             $credUser = $credsArr[0];
             $credPass = $credsArr[1];
             
@@ -136,23 +139,29 @@ class Tweetr
             else
             {
                 $opt[CURLOPT_USERPWD] = $credUser .':'. $credPass;
-
             }
-            
         }
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            // parse post parameters
-            $vars = "";
-            foreach($_POST as $key => $value) $vars .= '&'. $key .'='. urlencode($value);
-
+        	$postFields = array();
+            if (isset($_FILES['image']))
+            {
+            	$imagePath = $this->uploadDirectory.$_FILES['image']['name'];
+            	if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath))
+            		$postFields['image'] = '@'.realpath($imagePath);
+            	else
+            		die('Upload failed, check upload directory permissions/path...');
+            }
+            
+            foreach($_POST as $key => $val)
+            	$postFields[$key] = str_replace("%23", "#", urlencode($val));
+            	
             $opt[CURLOPT_POST] = true;
-            $opt[CURLOPT_POSTFIELDS] = trim($vars, '&');
             $opt[CURLOPT_HTTPHEADER] = array('Expect:');
+            $opt[CURLOPT_POSTFIELDS] = $postFields;
         }
         
-        $this->log($twitterURL);
         //do the request
         $curl = curl_init();
         curl_setopt_array($curl, $opt);
@@ -161,12 +170,13 @@ class Tweetr
         ob_start();
         $response = curl_exec($curl);
         
-        if(strlen("".$response) < 2 )
+        if(strlen(''.$response) < 2 )
             $response = ob_get_contents();
         
         ob_end_clean();
 
-
+        if (isset($imagePath))
+			unlink($imagePath);
 
         if($this->debug)
         {
@@ -183,7 +193,7 @@ class Tweetr
             $this->log($errorMessage);
         }
 
-        header("Content-type: text/xml; charset=utf-8");
+        header('Content-type: text/xml; charset=utf-8');
         
         /* caching - begin */
 		if ($this->cacheEnabled)
@@ -253,11 +263,11 @@ class Tweetr
 	 */
 	private function cacheKey()
 	{
-		foreach($_POST as $key => $value) 	$keys[] = $key . "=" . urlencode($value) ;
-		foreach($_GET as $key => $value) 		$keys[] = $key . "=" . urlencode($value) ;
+		foreach($_POST as $key => $value) 	$keys[] = $key . '=' . urlencode($value) ;
+		foreach($_GET as $key => $value) 		$keys[] = $key . '=' . urlencode($value) ;
 		
-		$keys[] = "app=tweetr";
-		$keys[] = "requrl=".urlencode($this->url['path']);
+		$keys[] = 'app=tweetr';
+		$keys[] = 'requrl='.urlencode($this->url['path']);
 		sort($keys);
 		return md5(implode('&', $keys));
 	}
@@ -294,11 +304,11 @@ class Tweetr
 	 */
 	private function cachePurge()
 	{
-		$dir_handle = @opendir($this->cacheDirectory) or die("Unable to open ".$this->cacheDirectory);
+		$dir_handle = @opendir($this->cacheDirectory) or die('Unable to open '.$this->cacheDirectory);
 		while ($file = readdir($dir_handle))
 		{
-			if ($file!="." && $file!=".." && (time() - $this->cacheTime) > @filemtime($this->cacheDirectory.$file))
-				unlink($this->cacheDirectory.$file) or die("Error. Could not erase file : ".$file);
+			if ($file!='.' && $file!='..' && (time() - $this->cacheTime) > @filemtime($this->cacheDirectory.$file))
+				unlink($this->cacheDirectory.$file) or die('Error. Could not erase file : '.$file);
 		}
 	}
 	
@@ -308,8 +318,8 @@ class Tweetr
 	private function cacheSave($value)
 	{
 		$this->cachePurge();
-		$fp = @fopen($this->cacheFilename(), 'w') or die("Error opening file: ".$this->cacheFilename());
-		@fwrite($fp, $value) or die("Error writing file.");
+		$fp = @fopen($this->cacheFilename(), 'w') or die('Error opening file: '.$this->cacheFilename());
+		@fwrite($fp, $value) or die('Error writing file.');
 		@fclose($fp);
 	}
 }
