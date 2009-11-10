@@ -155,7 +155,7 @@ class Tweetr
             }
             
             foreach($_POST as $key => $val)
-            	$postFields[$key] = str_replace("%23", "#", urlencode($val));
+            	$postFields[$key] = stripslashes($val);
             	
             $opt[CURLOPT_POST] = true;
             $opt[CURLOPT_HTTPHEADER] = array('Expect:');

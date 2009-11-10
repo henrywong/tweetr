@@ -81,7 +81,7 @@
         	    {
     	            tweetr.username = username.text;
     	            tweetr.password = password.text;
-    	            tweetr.sendTweet(tweet.text);
+    	            tweetr.updateStatus(tweet.text);
     	        }
     	        else
     	        {
