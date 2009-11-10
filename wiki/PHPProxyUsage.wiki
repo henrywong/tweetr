@@ -10,9 +10,8 @@
 = Installation =
 
   # Put the `/proxy` wherever you need it on your server.
-  # If the proxy is not on the same domain/subdomain as your app you will have to put the `crossdomain.xml` in the root folder of the domain you are going to use the proxy from.
-  # Change the `$tweetrOptions['baseURL']` variable to point to where you just put the proxy folder. For example if you want to call the proxy from `http://mydomain/mywebsite/proxy/` then your baseURL would be `/mywebsite/proxy`
-  # That's it!
+  # Call the proxy in your webbrowser by either directing your browser to the proxy folder or `/proxy/install.php`
+  # Follow the steps ;) !
 
 = Options =
 
