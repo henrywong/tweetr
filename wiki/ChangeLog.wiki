@@ -1,6 +1,39 @@
 #summary changelog history
 #labels Featured
 
+
+===v0.95===
+
+*Fixes / Changes*
+  * AS: Minor changes to internal authentication scheme to reflect proxy changes concerning authentication issues
+  * AS: Failed requests will dispatch a TweetEvent.FAILED with a HashData object if available
+  * AS: Replaced the Social Graph Methods page parameter with the new cursor parameter
+  * AS: Replace page parameter with the new cursor parameter for getFriends() and getFollowers()
+  * AS: Returntypes RETURN_TYPE_EXTENDED_USER_INFO and RETURN_TYPE_BASIC_USER_INFO have been replaced by RETURN_TYPE_USER_INFO since there is no difference between the two anymore.
+  * AS: Updated parameter documentation for search().
+  * AS: Marked getSingleTweet() as Deprecated. Please use getStatus() from now.
+  * AS: Marked destroyTweet() as Deprecated. Please use destroyStatus() from now.
+  * AS: Reminder: getReplies() is marked as Deprecated. Please use getMentions() from now.
+  * AS: Added CursorData Object to TweetEvent Responses if the response supplied by twitter contains it.
+
+  * PROXY: Fixed Browser Authentication Issues
+
+*New*
+  * AS: Added friendships/show methods showFriendshipById() and showFriendshipByName()
+  * AS: Added blocks/exists, blocks/blocking and blocks/blocking/ids methods blockExists(), getBlocks() and getBlockIds()
+  * AS: Added trends methods currentTrends(), dailyTrends(), weeklyTrends()
+  * AS: Added spam_report method reportSpammer()
+  * AS: Added missing profile methods updateProfileImage(), updateProfileBackgroundImage() and updateProfileColors()
+  * AS: Added verifyCredentials() to check if the supplied credentials are valid or not.
+
+  * AS: Added the entire barrage of LIST methods. getList(), createList(), deleteList(), getLists(), getListStatuses(), getListMemberships(), getListSubscriptions(), getListMembers(), addListMember(), removeListMember(), hasListMember(), getListSubscribers(), addListSubscription(), removeListSubscription(), hasListSubscription();
+
+  * AS: Added URL Unshortener Class using the public service provided by http://untiny.me/
+
+  * PROXY: Added Install/Configuration Script (install.php)
+
+----
+
 ===v0.94===
 
 *Fixes / Changes*
