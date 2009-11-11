@@ -2,45 +2,42 @@
 
 
 ===The Good Conspiracy - Inspire, Conspire===
-_(by [http://amuseintegrative.com/ Amuse])_
-
 The Good Conspiracy (_presented at the The 6th edition of [http://www.biennalemontreal.org/en/melissa-mongiat- La Biennale de Montréal]_) is a co-creative event that will transfuse the city with positive energy. Citizens are invited to discover elements of the conspiracy on public grounds and become conspirators themselves by sending positive messages by means of contemporary communication networks, electronic and otherwise.
 
-*Link:* http://thegoodconspiracy.com/conspir/
+ * *Link:* http://thegoodconspiracy.com/conspir/
+ * *Author:* [http://amuseintegrative.com/ Amuse]
 
 
 ===TwitterSketch===
-_(by Pete Schirmer)_
-
 It searches Twitter for the most recent posts that contain either direction words ("up" "down" "left" or "right") or color words ("red" "blue" "green" etc). The drawing 'cursor' creates circles of varying sizes and fades older circles over time.
 
-*Link:* http://www.odopod.com/blog/twittersketch-twitter-experiment/
+ * *Link:* http://www.odopod.com/blog/twittersketch-twitter-experiment/
+ * *Author:* Pete Schirmer
 
 
 ===WordFeeder=== 
-_(by [http://lindsayburtner.com/blog/ Lindsay Burtner])_
-
 A word search that retrieves flickr images and tweets from the word you enter. 
 
-*Link:* http://lindsayburtner.com/blog/?p=176
+ * *Link:* http://lindsayburtner.com/blog/?p=176
+ * *Author:* [http://lindsayburtner.com/blog/ Lindsay Burtner]
+
 
 ===Free Twitter Designer===
-_(by [http://zugara.com/ Zugara])_
-
 Personalize your Twitter background with this tool.  it will help you create free Twitter backgrounds that have the same look and feel as those done by professional graphic designers. It's easy to use, and best of all, it's Free! Give it a try! 
 
-*Link:* http://www.freetwitterdesigner.com/
+ * *Link:* http://www.freetwitterdesigner.com/
+ * *Author:* [http://zugara.com/ Zugara]
 
 
 ===Tweepjob=== 
-_(by [http://dougr.net/ Douglas Reynolds])_
-
 A service who’s goal is to bring job seekers and organizations, recruiters, and individual’s who have open opportunities for employment or contracts, together using tweets as a means to communicate. 
 
-*Link:* http://tweepjob.com/
+ * *Link:* http://tweepjob.com/
+ * *Author:* [http://dougr.net/ Douglas Reynolds]
+
 
 ===Twidget===
-
 A Twitter Client making use of the Phidget LCD Display Interface
 
-*Link:* http://blog.swfjunkie.com/2009/02/phidgets-meet-twitter/
+ * *Link:* http://blog.swfjunkie.com/2009/02/phidgets-meet-twitter/
+ * *Author:* [http://blog.swfjunkie.com Sandro Ducceschi]
