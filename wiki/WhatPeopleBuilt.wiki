@@ -25,7 +25,7 @@ A word search that retrieves flickr images and tweets from the word you enter.
 *Link:* http://lindsayburtner.com/blog/?p=176
 
 ===Free Twitter Designer===
-_(by Zugara)_
+_(by [http://zugara.com/ Zugara])_
 
 Personalize your Twitter background with this tool.  it will help you create free Twitter backgrounds that have the same look and feel as those done by professional graphic designers. It's easy to use, and best of all, it's Free! Give it a try! 
 
