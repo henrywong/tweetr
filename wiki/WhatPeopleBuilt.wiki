@@ -8,11 +8,13 @@ The Good Conspiracy (_presented at the The 6th edition of [http://www.biennalemo
  * *Author:* [http://amuseintegrative.com/ Amuse]
 
 
+
 ===!TwitterSketch===
 It searches Twitter for the most recent posts that contain either direction words ("up" "down" "left" or "right") or color words ("red" "blue" "green" etc). The drawing 'cursor' creates circles of varying sizes and fades older circles over time.
 
  * *Link:* http://www.odopod.com/blog/twittersketch-twitter-experiment/
  * *Author:* Pete Schirmer
+
 
 
 ===!WordFeeder=== 
@@ -22,6 +24,7 @@ A word search that retrieves flickr images and tweets from the word you enter.
  * *Author:* [http://lindsayburtner.com/blog/ Lindsay Burtner]
 
 
+
 ===Free Twitter Designer===
 Personalize your Twitter background with this tool.  it will help you create free Twitter backgrounds that have the same look and feel as those done by professional graphic designers. It's easy to use, and best of all, it's Free! Give it a try! 
 
@@ -29,11 +32,13 @@ Personalize your Twitter background with this tool.  it will help you create fre
  * *Author:* [http://zugara.com/ Zugara]
 
 
+
 ===Tweepjob=== 
 A service who’s goal is to bring job seekers and organizations, recruiters, and individual’s who have open opportunities for employment or contracts, together using tweets as a means to communicate. 
 
  * *Link:* http://tweepjob.com/
  * *Author:* [http://dougr.net/ Douglas Reynolds]
+
 
 
 ===Twidget===
