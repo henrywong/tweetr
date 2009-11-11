@@ -8,14 +8,14 @@ The Good Conspiracy (_presented at the The 6th edition of [http://www.biennalemo
  * *Author:* [http://amuseintegrative.com/ Amuse]
 
 
-===TwitterSketch===
+===!TwitterSketch===
 It searches Twitter for the most recent posts that contain either direction words ("up" "down" "left" or "right") or color words ("red" "blue" "green" etc). The drawing 'cursor' creates circles of varying sizes and fades older circles over time.
 
  * *Link:* http://www.odopod.com/blog/twittersketch-twitter-experiment/
  * *Author:* Pete Schirmer
 
 
-===WordFeeder=== 
+===!WordFeeder=== 
 A word search that retrieves flickr images and tweets from the word you enter. 
 
  * *Link:* http://lindsayburtner.com/blog/?p=176
