@@ -632,10 +632,10 @@ package com.swfjunkie.tweetr
          * @param listUser      Optional.  If defined the desired list from the defined user is retrieved. Else the list is supposed to be of the authenticated user.
          * @param since_id      Optional.  Returns only statuses with an ID greater than (that is, more recent than) the specified ID.  
          * @param max_id        Optional.  Returns only statuses with an ID less than (that is, older than) or equal to the specified ID. 
-         * @param count         Optional.  Specifies the number of statuses to retrieve. May not be greater than 200.  
+         * @param perPage       Optional.  Specifies the number of statuses to retrieve. May not be greater than 200.  
          * @param page          Optional.  Specifies the page of results to retrieve. Note: there are <a href="http://apiwiki.twitter.com/Things-Every-Developer-Should-Know#6Therearepaginationlimits">pagination limits.</a>
          */ 
-        public function getListStatuses(slug:String, listUser:String = null, since_id:String = null, max_id:Number = 0, count:Number = 0, page:Number = 0):void
+        public function getListStatuses(slug:String, listUser:String = null, since_id:String = null, max_id:Number = 0, perPage:Number = 0, page:Number = 0):void
         {
             var arguments:Array = [];
             setGETRequest();
@@ -645,8 +645,8 @@ package com.swfjunkie.tweetr
                 arguments.push("since_id="+since_id);
             if (max_id > 0)
                 arguments.push("max_id="+max_id);
-            if (page > 0)
-                arguments.push("count="+count);
+            if (perPage > 0)
+                arguments.push("per_page="+perPage);
             if (page > 0)
                 arguments.push("page="+page);
             
