@@ -364,7 +364,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getListStatuses()">getListStatuses</a>(slug:String, listUser:String = null, since_id:String = null, max_id:Number = 0, count:Number = 0, page:Number = 0):void</div>
+<a class="signatureLink" href="#getListStatuses()">getListStatuses</a>(slug:String, listUser:String = null, since_id:String = null, max_id:Number = 0, perPage:Number = 0, page:Number = 0):void</div>
 <div class="summaryTableDescription">
          <b><font color="#00AA00">NEW</font></b> - Show tweet timeline for members of the specified list.</div>
 </td><td class="summaryTableOwnerCol">Tweetr</td>
@@ -1523,7 +1523,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function getListStatuses(slug:String, listUser:String = null, since_id:String = null, max_id:Number = 0, count:Number = 0, page:Number = 0):void</code><p>
+<code>public function getListStatuses(slug:String, listUser:String = null, since_id:String = null, max_id:Number = 0, perPage:Number = 0, page:Number = 0):void</code><p>
          <b><font color="#00AA00">NEW</font></b> - Show tweet timeline for members of the specified list.
          </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -1556,7 +1556,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">count</span>:Number</code> (default = <code>0</code>)<code></code> &mdash;         Optional.  Specifies the number of statuses to retrieve. May not be greater than 200.  
+<td width="20px"></td><td><code><span class="label">perPage</span>:Number</code> (default = <code>0</code>)<code></code> &mdash;       Optional.  Specifies the number of statuses to retrieve. May not be greater than 200.  
          </td>
 </tr>
 <tr>
