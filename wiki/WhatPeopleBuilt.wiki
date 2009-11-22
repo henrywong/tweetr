@@ -9,6 +9,13 @@ The Good Conspiracy (_presented at the The 6th edition of [http://www.biennalemo
 
 ----
 
+===Der Pfad der Könige===
+Der Pfad der Könige is a clever way of using twitter for a raffle. In this case a christmas raffle featuring the three kings Balthasar, Melchior and Caspar. The player has to guess by the hints that the three kings leave on twitter where they are and can take part in the raffle if they find out where they are.
+ * *Link:* http://www.pfad-der-koenige.de/
+ * *Author:* [http://www.spot-media.de/ Spot-Media AG]
+
+----
+
 ===!TwitterSketch===
 It searches Twitter for the most recent posts that contain either direction words ("up" "down" "left" or "right") or color words ("red" "blue" "green" etc). The drawing 'cursor' creates circles of varying sizes and fades older circles over time.
 
