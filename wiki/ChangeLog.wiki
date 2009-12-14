@@ -1,5 +1,4 @@
 #summary changelog history
-#labels Featured
 
 
 ===v0.95===
