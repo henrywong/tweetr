@@ -1,5 +1,4 @@
 #summary Roadmap for tweetr.
-#labels Featured,Phase-Requirements
 
 ===For Next Release (v0.96):===
 
