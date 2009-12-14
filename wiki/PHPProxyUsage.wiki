@@ -1,5 +1,4 @@
 #summary How to use the Tweetr PHP Proxy
-#labels Featured
 
 = Requirements =
 
